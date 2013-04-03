@@ -1,19 +1,40 @@
-window.clientId = -> '655945253994-7o4i08plnq0d6uv6nqv2n7b0bhap47tu.apps.googleusercontent.com'
-window.apiKey = -> 'AIzaSyAegKTII2qIwBWUsAVKWSQq1B0aQFwE0CE';
-window.scopes = -> 'https://www.googleapis.com/auth/analytics'
-window.client_url = -> 'https://apis.google.com/js/client.js?onload=handleClientLoad'
+clientId = -> '655945253994-7o4i08plnq0d6uv6nqv2n7b0bhap47tu.apps.googleusercontent.com'
+apiKey = -> 'AIzaSyAegKTII2qIwBWUsAVKWSQq1B0aQFwE0CE';
+scopes = -> 'https://www.googleapis.com/auth/analytics'
 
 window.helloText = -> 'Blog Stats'
 
 window.handleClientLoad = -> 
-  alert "HI"
-  
-window.stats = ->
-  html = JST['app/templates/stats.us'](text: helloText())
-  document.body.innerHTML += html
+  window.gapi.client.setApiKey(apiKey())
+  window.setTimeout(checkAuth,1)
 
-if window.addEventListener
-  window.addEventListener('DOMContentLoaded', stats, false)
-else
-  window.attachEvent('load', stats)
+checkAuth = -> 
+  window.gapi.auth.authorize({client_id: clientId(), scope: scopes(), immediate: true}, handleAuthResult)
+               
+handleAuthResult = (authResult) -> 
+  authorizeButton = document.getElementById('authorize-button');
+  if (authResult && !authResult.error)
+    authorizeButton.style.visibility = 'hidden';
+    makeApiCall();
+  else
+    authorizeButton.style.visibility = '';
+    authorizeButton.onclick = handleAuthClick;
 
+handleAuthClick = (event) ->
+  gapi.auth.authorize({client_id: clientId(), scope: scopes(), immediate: false}, handleAuthResult);
+  return false;
+
+makeApiCall = -> 
+    gapi.client.load('analytics', 'v3', -> 
+      request = gapi.client.analytics.data.ga.get({
+        'ids': 'ga:51266672',
+        'start-date': '2013-03-01',
+        'end-date': '2013-03-15',
+        'metrics': 'ga:visits',
+      })
+      request.execute((resp) ->
+        visit_total =  resp.totalsForAllResults["ga:visits"]
+        html = JST['app/templates/stats.us'](text: visit_total)
+        document.body.innerHTML += html
+      )
+    )
