@@ -1,0 +1,5 @@
+<div class="hello">
+    <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+    <div id="content"></div>
+    <%= text %>
+</div>
