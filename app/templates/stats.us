@@ -1,4 +1,16 @@
-<div class="hello">
-    <div id="content"></div>
-    <%= text %>
-</div>
+<%= visit_total %>
+<form ng-submit="addTodo()">
+  <div class="panel">
+    <input type="text" class="span2" value="02-16-2012" id="startdatepicker">
+    <input type="text" class="span2" value="02-16-2012" id="enddatepicker">
+  </div>
+  <input class="btn-primary" type="submit" value="add">
+</form>
+<table>
+  <tr><th>Page</th><th>Visits</th></tr>
+  <% for(var i=0; i<visits_by_page.length; i++) { %>
+    <tr>
+      <td><%= visits_by_page[i][0] %></td>
+      <td><%= visits_by_page[i][1] %></td>
+    </tr>
+  <% } %>

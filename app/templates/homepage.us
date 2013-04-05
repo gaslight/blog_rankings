@@ -2,14 +2,13 @@
 <html>
   <head>
     <title><%= pkg.name %></title>
-
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
     <link rel="stylesheet" type="text/css" href="<%= css %>" media="all" />
-
   </head>
   <body>
     <button id="authorize-button" style="visibility: hidden">Authorize</button>
     <script type="text/javascript" src="<%= js %>"></script>
     <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
-    <div id="content"></div>
   </body>
 </html>
