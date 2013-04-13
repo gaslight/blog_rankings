@@ -13,21 +13,6 @@ ListCtrl = ($scope) ->
   ]
 
   $scope.updatePageVisits = -> 
-    $scope.pageVisits = [
-      {"page":"page A","visits":$scope.pageVisits[0].visits + 1},
-      {"page":"page B","visits":$scope.pageVisits[1].visits + 1},
-      {"page":"page C","visits":$scope.pageVisits[2].visits + 1},
-    ]
-
-blogRanking.controller 'ListCtrl', ListCtrl
-
-###
-  constructor: ->
-    @visitTotals = '123'
-    @load()
-
-  load: ->
-    that = this
     gapi.client.load 'analytics', 'v3', -> 
       request = gapi.client.analytics.data.ga.get({
         'ids': 'ga:51266672',
@@ -40,4 +25,20 @@ blogRanking.controller 'ListCtrl', ListCtrl
 
       request.execute (resp) ->
         debugger
-        that.visitTotals = resp.totalsForAllResults["ga:visits"]
+        $scope.pageVisits = [
+          {"page":"page A","visits":$scope.pageVisits[0].visits + 1},
+          {"page":"page B","visits":$scope.pageVisits[1].visits + 1},
+          {"page":"page C","visits":$scope.pageVisits[2].visits + 1},
+        ]
+
+      debugger
+
+blogRanking.controller 'ListCtrl', ListCtrl
+
+###
+  constructor: ->
+    @visitTotals = '123'
+    @load()
+
+  load: ->
+    that = this
