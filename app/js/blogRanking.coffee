@@ -6,12 +6,12 @@ blogRanking = angular.module('blogRanking',[])
 #      when('/', {controller: ListCtrl, templateUrl: 'list.html'}))
 
 ListCtrl = ($scope) ->
-  $scope.stats = '123'
-  setTimeout( (->
-      debugger
-      $scope.stats = 'abc'
-    ), 3000
-  )
+  $scope.stats = 16
+  $scope.pageVisits = [
+    {"page":"page A","visits":"3"},
+    {"page":"page B","visits":"5"},
+    {"page":"page C","visits":"8"},
+  ]
 
 blogRanking.controller 'ListCtrl', ListCtrl
 
