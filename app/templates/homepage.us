@@ -1,14 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="blogRanking">
   <head>
     <title><%= pkg.name %></title>
     <script src="http://code.jquery.com/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
     <link rel="stylesheet" type="text/css" href="<%= css %>" media="all" />
   </head>
   <body>
     <button id="authorize-button" style="visibility: hidden">Authorize</button>
     <script type="text/javascript" src="<%= js %>"></script>
-    <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+    Hi
+    <input ng-model="stats"></input>
+    <table ng-controller="ListCtrl">
+      <tr><th>Page</th><th>Visits</th></tr>
+      <tr>
+        <td></td><td>{{stats}}</td>
+      </tr>
+    </table>
   </body>
 </html>

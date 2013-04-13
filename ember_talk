@@ -1,0 +1,29 @@
+backbone is good place to start if you've never done client MVC. It takes care of less plumbing.
+
+UIKit on iOS
+
+Routing
+Documentation
+More open source apps
+
+Naming conventions
+Outlets
+Associations
+Controllers
+
+Computed Properties
+Router Improvements
+Transactions
+Handlebars Helpers
+
+OPEN SOURCE EXAMPLES
+Travis Next
+Discourse
+
+peepcode
+ember guides
+
+backbone = brownfield
+ember = greenfield
+
+`
