@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="blogRanking">
+<html>
   <head>
     <title><%= pkg.name %></title>
     <script src="http://code.jquery.com/jquery.min.js"></script>
@@ -9,6 +9,7 @@
   <body>
     <button id="authorize-button" style="visibility: hidden">Authorize</button>
     <script type="text/javascript" src="<%= js %>"></script>
+    <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
     <div ng-controller="ListCtrl">
       <table>
         <thead>

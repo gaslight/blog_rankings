@@ -5,6 +5,7 @@ blogRanking = angular.module('blogRanking',[])
 #      when('/', {controller: ListCtrl, templateUrl: 'list.html'}))
 
 ListCtrl = ($scope) ->
+
   $scope.pageVisits = [
     {"page":"page A","visits":3},
     {"page":"page B","visits":5},
@@ -17,7 +18,6 @@ ListCtrl = ($scope) ->
       {"page":"page B","visits":$scope.pageVisits[1].visits + 1},
       {"page":"page C","visits":$scope.pageVisits[2].visits + 1},
     ]
-  
 
 blogRanking.controller 'ListCtrl', ListCtrl
 
