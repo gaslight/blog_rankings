@@ -1,23 +1,25 @@
 blogRanking = angular.module('blogRanking',[])
 
-
 #  config(($routeProvider) -> 
 #    $routeProvider.
 #      when('/', {controller: ListCtrl, templateUrl: 'list.html'}))
 
 ListCtrl = ($scope) ->
-  $scope.stats = 16
   $scope.pageVisits = [
-    {"page":"page A","visits":"3"},
-    {"page":"page B","visits":"5"},
-    {"page":"page C","visits":"8"},
+    {"page":"page A","visits":3},
+    {"page":"page B","visits":5},
+    {"page":"page C","visits":8},
   ]
 
-blogRanking.controller 'ListCtrl', ListCtrl
+  $scope.updatePageVisits = -> 
+    $scope.pageVisits = [
+      {"page":"page A","visits":$scope.pageVisits[0].visits + 1},
+      {"page":"page B","visits":$scope.pageVisits[1].visits + 1},
+      {"page":"page C","visits":$scope.pageVisits[2].visits + 1},
+    ]
+  
 
-window.Stats = {
-  visitTotals: '123'
-}
+blogRanking.controller 'ListCtrl', ListCtrl
 
 ###
   constructor: ->

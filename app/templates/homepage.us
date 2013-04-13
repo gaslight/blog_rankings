@@ -9,16 +9,20 @@
   <body>
     <button id="authorize-button" style="visibility: hidden">Authorize</button>
     <script type="text/javascript" src="<%= js %>"></script>
-    <input ng-model="stats"></input>
-    <table ng-controller="ListCtrl">
-      <thead>
-        <tr><th>Page</th><th>Visits</th></tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="pageVisit in pageVisits">
-          <td>{{pageVisit.page}}</td><td>{{pageVisit.visits}}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div ng-controller="ListCtrl">
+      <table>
+        <thead>
+          <tr><th>Page</th><th>Visits</th></tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="pageVisit in pageVisits">
+            <td>{{pageVisit.page}}</td><td>{{pageVisit.visits}}</td>
+          </tr>
+        </tbody>
+      </table>
+      <form ng-submit="updatePageVisits()">
+        <input type="submit" value="Update"/>
+      </form>
+    </div>
   </body>
 </html>
