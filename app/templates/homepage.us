@@ -11,19 +11,41 @@
     <script type="text/javascript" src="<%= js %>"></script>
     <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
     <div ng-controller="ListCtrl">
-      <table>
-        <thead>
-          <tr><th>Page</th><th>Visits</th></tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="pageVisit in pageVisits">
-            <td>{{pageVisit.page}}</td><td>{{pageVisit.visits}}</td>
-          </tr>
-        </tbody>
-      </table>
       <form ng-submit="updatePageVisits()">
-        <input type="submit" value="Update"/>
+        <div class="row">
+          <div class="large-2 columns">
+            <label>Start Date</label>
+          </div>
+          <div class="large-2 columns">
+            <label>End Date</label>
+          </div>
+          <div class="large-8 columns">
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-2 columns">
+            <input type="text" id="startdatepicker"/>
+          </div>
+          <div class="large-2 columns">
+            <input type="text" id="enddatepicker"/>
+          </div>
+          <div class="large-8 columns">
+            <input type="submit" value="Update" class="button small"/>
+          </div>
+        </div>
       </form>
+      <div class="row">
+        <table>
+          <thead>
+            <tr><th>Page</th><th>Visits</th></tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="pageVisit in pageVisits">
+              <td>{{pageVisit.page}}</td><td>{{pageVisit.visits}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </body>
 </html>
