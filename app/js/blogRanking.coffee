@@ -24,21 +24,12 @@ ListCtrl = ($scope) ->
       })
 
       request.execute (resp) ->
-        debugger
-        $scope.pageVisits = [
-          {"page":"page A","visits":$scope.pageVisits[0].visits + 1},
-          {"page":"page B","visits":$scope.pageVisits[1].visits + 1},
-          {"page":"page C","visits":$scope.pageVisits[2].visits + 1},
-        ]
+        pageVisits = []
+        for row in resp.rows
+          pageVisit = {"page":row[0],"visits":row[1]}
+          pageVisits.push pageVisit
+        $scope.pageVisits = pageVisits
+        $scope.$apply()
 
-      debugger
 
 blogRanking.controller 'ListCtrl', ListCtrl
-
-###
-  constructor: ->
-    @visitTotals = '123'
-    @load()
-
-  load: ->
-    that = this
