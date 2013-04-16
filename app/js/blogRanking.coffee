@@ -37,3 +37,12 @@ ListCtrl = ($scope) ->
 
 
 blogRanking.controller 'ListCtrl', ListCtrl
+
+blogRanking.directive 'datepicker', -> 
+  (scope, element, attrs) ->
+    element.fdatepicker({
+      format: 'yyyy-mm-dd'
+    }).on 'changeDate', ->
+      model = $(this).attr('ng-model')
+      scope[model] = $(this).val()
+      scope.$apply()

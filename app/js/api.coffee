@@ -14,7 +14,6 @@ handleAuthResult = (authResult) ->
   angular.bootstrap(document, ['blogRanking'])
   if (authResult && !authResult.error)
     authorizeButton.style.visibility = 'hidden';
-    makeApiCall();
   else
     authorizeButton.style.visibility = '';
     authorizeButton.onclick = handleAuthClick;
@@ -23,12 +22,3 @@ handleAuthResult = (authResult) ->
 handleAuthClick = (event) ->
   gapi.auth.authorize({client_id: clientId(), scope: scopes(), immediate: false}, handleAuthResult);
   return false;
-
-makeApiCall = -> 
-  $('#startDatePicker').fdatepicker({
-    format: 'yyyy-mm-dd'
-  })
-
-  $('#endDatePicker').fdatepicker({
-    format: 'yyyy-mm-dd'
-  })

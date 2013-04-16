@@ -24,10 +24,10 @@
         </div>
         <div class="row">
           <div class="large-2 columns">
-            <input type="text" id="startDatePicker"/>
+            <input type="text" ng-model="startDate" datepicker/>
           </div>
           <div class="large-2 columns">
-            <input type="text" id="endDatePicker"/>
+            <input type="text" ng-model="endDate" datepicker/>
           </div>
           <div class="large-8 columns">
             <input type="submit" value="Update" class="button small"/>
