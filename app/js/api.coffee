@@ -25,10 +25,10 @@ handleAuthClick = (event) ->
   return false;
 
 makeApiCall = -> 
-  $('#startdatepicker').fdatepicker({
-    format: 'mm-dd-yyyy'
+  $('#startDatePicker').fdatepicker({
+    format: 'yyyy-mm-dd'
   })
 
-  $('#enddatepicker').fdatepicker({
-    format: 'mm-dd-yyyy'
+  $('#endDatePicker').fdatepicker({
+    format: 'yyyy-mm-dd'
   })

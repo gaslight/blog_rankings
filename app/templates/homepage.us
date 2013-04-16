@@ -24,10 +24,10 @@
         </div>
         <div class="row">
           <div class="large-2 columns">
-            <input type="text" id="startdatepicker"/>
+            <input type="text" id="startDatePicker"/>
           </div>
           <div class="large-2 columns">
-            <input type="text" id="enddatepicker"/>
+            <input type="text" id="endDatePicker"/>
           </div>
           <div class="large-8 columns">
             <input type="submit" value="Update" class="button small"/>

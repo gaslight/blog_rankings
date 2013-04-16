@@ -13,12 +13,16 @@ ListCtrl = ($scope) ->
   ]
 
   $scope.updatePageVisits = -> 
+    unless $scope.startDate && $scope.endDate           
+      $scope.startDate = $("#startDatePicker").val()           
+      $scope.endDate = $("#endDatePicker").val()
+
     gapi.client.load 'analytics', 'v3', -> 
       request = gapi.client.analytics.data.ga.get({
         'ids': 'ga:51266672',
         'dimensions' : 'ga:pagepath',
-        'start-date': '2013-03-01',
-        'end-date': '2013-03-15',
+        'start-date': $scope.startDate,
+        'end-date': $scope.endDate,
         'metrics': 'ga:visits',
         'sort': '-ga:visits',
       })
