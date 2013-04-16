@@ -15,21 +15,14 @@
         <div class="row">
           <div class="large-2 columns">
             <label>Start Date</label>
-          </div>
-          <div class="large-2 columns">
-            <label>End Date</label>
-          </div>
-          <div class="large-8 columns">
-          </div>
-        </div>
-        <div class="row">
-          <div class="large-2 columns">
             <input type="text" ng-model="startDate" datepicker/>
           </div>
           <div class="large-2 columns">
+            <label>End Date</label>
             <input type="text" ng-model="endDate" datepicker/>
           </div>
           <div class="large-8 columns">
+            <label>&nbsp;</label>
             <input type="submit" value="Update" class="button small"/>
           </div>
         </div>
