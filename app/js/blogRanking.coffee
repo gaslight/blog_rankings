@@ -45,4 +45,3 @@ blogRanking.directive 'datepicker', ->
     }).on 'changeDate', ->
       model = $(this).attr('ng-model')
       scope[model] = $(this).val()
-      scope.$apply()
