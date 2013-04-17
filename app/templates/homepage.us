@@ -15,11 +15,11 @@
         <div class="row">
           <div class="large-2 columns">
             <label>Start Date</label>
-            <input type="text" ng-model="startDate" datepicker/>
+            <input type="text" ng-model="filter.startDate" datepicker/>
           </div>
           <div class="large-2 columns">
             <label>End Date</label>
-            <input type="text" ng-model="endDate" datepicker/>
+            <input type="text" ng-model="filter.endDate" datepicker/>
           </div>
           <div class="large-8 columns">
             <label>&nbsp;</label>

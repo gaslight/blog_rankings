@@ -4,25 +4,29 @@ blogRanking = angular.module('blogRanking',[])
 #    $routeProvider.
 #      when('/', {controller: ListCtrl, templateUrl: 'list.html'}))
 
+class Filter
+  
+  defaultStartDate: "2013-03-01"
+  defaultEndDate: "2013-03-15"
+  
+  constructor: ->
+    @startDate = @defaultStartDate unless @startDate
+    @endDate   = @defaultEndDate   unless @endDate
+
 ListCtrl = ($scope) ->
 
-  $scope.pageVisits = [
-    {"page":"page A","visits":3},
-    {"page":"page B","visits":5},
-    {"page":"page C","visits":8},
-  ]
+  $scope.filter = new Filter
 
   $scope.updatePageVisits = -> 
-    unless $scope.startDate && $scope.endDate           
-      $scope.startDate = $("#startDatePicker").val()           
-      $scope.endDate = $("#endDatePicker").val()
+    $scope.makeApiCall($scope.filter)
 
+  $scope.makeApiCall = (filter) ->
     gapi.client.load 'analytics', 'v3', -> 
       request = gapi.client.analytics.data.ga.get({
         'ids': 'ga:51266672',
         'dimensions' : 'ga:pagepath',
-        'start-date': $scope.startDate,
-        'end-date': $scope.endDate,
+        'start-date': filter.startDate,
+        'end-date': filter.endDate,
         'metrics': 'ga:visits',
         'sort': '-ga:visits',
       })
@@ -35,6 +39,7 @@ ListCtrl = ($scope) ->
         $scope.pageVisits = pageVisits
         $scope.$apply()
 
+  $scope.updatePageVisits();
 
 blogRanking.controller 'ListCtrl', ListCtrl
 
@@ -43,5 +48,5 @@ blogRanking.directive 'datepicker', ->
     element.fdatepicker({
       format: 'yyyy-mm-dd'
     }).on 'changeDate', ->
-      model = $(this).attr('ng-model')
-      scope[model] = $(this).val()
+      dateAttr = $(this).attr('ng-model')
+      scope[dateAttr] = $(this).val()

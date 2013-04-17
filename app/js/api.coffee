@@ -12,12 +12,12 @@ checkAuth = ->
 handleAuthResult = (authResult) -> 
   authorizeButton = document.getElementById('authorize-button');
   angular.bootstrap(document, ['blogRanking'])
+
   if (authResult && !authResult.error)
     authorizeButton.style.visibility = 'hidden';
   else
     authorizeButton.style.visibility = '';
     authorizeButton.onclick = handleAuthClick;
-
 
 handleAuthClick = (event) ->
   gapi.auth.authorize({client_id: clientId(), scope: scopes(), immediate: false}, handleAuthResult);
