@@ -48,5 +48,7 @@ blogRanking.directive 'datepicker', ->
     element.fdatepicker({
       format: 'yyyy-mm-dd'
     }).on 'changeDate', ->
-      dateAttr = $(this).attr('ng-model')
-      scope[dateAttr] = $(this).val()
+      # e.g. ng-model is "filter.endDate"
+      attrPath = $(this).attr('ng-model')
+      attrs = attrPath.split(".")
+      scope[attrs[0]][attrs[1]] = $(this).val()
