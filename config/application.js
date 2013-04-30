@@ -6,6 +6,12 @@
  */
 
 module.exports = require('lineman').config.extend('application', {
+  concat: {
+    js: {
+      src: ["<banner:meta.banner>", "<%= files.js.jquery %>","<%= files.js.vendor %>", "<%= files.template.generated %>", "<%= files.coffee.generated %>", "<%= files.js.app %>"]
+    }
+  }
+  
   //Override application configuration here. Common examples follow in the comments.
 
   // API Proxying
