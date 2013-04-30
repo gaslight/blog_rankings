@@ -1,13 +1,24 @@
-blogRanking = angular.module('blogRanking',[])
+window.blogRanking = angular.module('blogRanking',[])
 
 #  config(($routeProvider) -> 
 #    $routeProvider.
 #      when('/', {controller: ListCtrl, templateUrl: 'list.html'}))
 
-class Filter
+class blogRanking.Filter
   
-  defaultStartDate: "2013-03-01"
-  defaultEndDate: "2013-03-15"
+  defaultStartDate: ->
+    today = Date.today()
+    if today.is().monday() || today.is().sunday()
+      today.last().monday()
+    else
+      today.last().week().last().monday()
+
+  defaultEndDate: ->
+    today = Date.today()
+    if today.is().sunday()
+      today
+    else
+      today.last().sunday()
   
   constructor: ->
     @startDate = @defaultStartDate unless @startDate
@@ -15,7 +26,7 @@ class Filter
 
 ListCtrl = ($scope) ->
 
-  $scope.filter = new Filter
+  $scope.filter = new blogRanking.Filter
 
   $scope.updatePageVisits = -> 
     $scope.makeApiCall($scope.filter)
@@ -45,6 +56,7 @@ blogRanking.controller 'ListCtrl', ListCtrl
 
 blogRanking.directive 'datepicker', -> 
   (scope, element, attrs) ->
+    
     element.fdatepicker({
       format: 'yyyy-mm-dd'
     }).on 'changeDate', ->
