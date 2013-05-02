@@ -6,57 +6,86 @@ window.blogRanking = angular.module('blogRanking',[])
 
 class blogRanking.Filter
   
+  dateFormat = "yyyy-MM-d"
+  
   defaultStartDate: ->
+    date = null
     today = Date.today()
+
     if today.is().monday() || today.is().sunday()
-      today.last().monday()
+      date = today.last().monday()
     else
-      today.last().week().last().monday()
+      date = today.last().week().last().monday()
+
+    date.toString(dateFormat)
 
   defaultEndDate: ->
+    date = null
     today = Date.today()
+
     if today.is().sunday()
-      today
+      date = today
     else
-      today.last().sunday()
+      date = today.last().sunday()
+
+    date.toString(dateFormat)
   
   constructor: ->
-    @startDate = @defaultStartDate unless @startDate
-    @endDate   = @defaultEndDate   unless @endDate
+    @startDate = @defaultStartDate() unless @startDate
+    @endDate   = @defaultEndDate()   unless @endDate
 
 ListCtrl = ($scope) ->
 
   $scope.filter = new blogRanking.Filter
 
-  $scope.updatePageVisits = -> 
-    $scope.makeApiCall($scope.filter)
+  $scope.updatePage = -> 
+    makeVisitsCall($scope.filter)
+    makeEngagmentCall($scope.filter)
 
-  $scope.makeApiCall = (filter) ->
+  makeEngagmentCall = (filter) ->
     gapi.client.load 'analytics', 'v3', -> 
-      request = gapi.client.analytics.data.ga.get({
-        'ids': 'ga:51266672',
-        'dimensions' : 'ga:pagepath',
-        'start-date': filter.startDate,
-        'end-date': filter.endDate,
+      request = prepareRequest(filter,{
+        'metrics': 'ga:avgTimeOnSite',
+        'sort': '-ga:avgTimeOnSite',
+      })
+
+      $scope.pageEngagements = []
+      executeRequest(request,$scope.pageEngagements)
+
+  makeVisitsCall = (filter) ->
+    gapi.client.load 'analytics', 'v3', -> 
+      request = prepareRequest(filter,{
         'metrics': 'ga:visits',
         'sort': '-ga:visits',
       })
 
-      request.execute (resp) ->
-        pageVisits = []
-        for row in resp.rows
-          pageVisit = {"page":row[0],"visits":row[1]}
-          pageVisits.push pageVisit
-        $scope.pageVisits = pageVisits
-        $scope.$apply()
+      $scope.pageVisits = []
+      executeRequest(request,$scope.pageVisits)
 
-  $scope.updatePageVisits();
+  prepareRequest= (filter,params) ->
+    standard_params = {
+        'ids': 'ga:51266672',
+        'dimensions' : 'ga:pagepath',
+        'start-date': filter.startDate,
+        'end-date': filter.endDate,
+        'max-results': '10',
+    }
+    gapi.client.analytics.data.ga.get(jQuery.extend(standard_params,params))
+
+  executeRequest = (request,models) ->
+    request.execute (resp) ->
+      results = []
+      for row in resp.rows
+        result = {"page":row[0],"result":row[1]}
+        models.push result
+      $scope.$apply()
+
+  $scope.updatePage();
 
 blogRanking.controller 'ListCtrl', ListCtrl
 
 blogRanking.directive 'datepicker', -> 
   (scope, element, attrs) ->
-    
     element.fdatepicker({
       format: 'yyyy-mm-dd'
     }).on 'changeDate', ->

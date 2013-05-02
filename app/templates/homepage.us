@@ -17,7 +17,7 @@
 
     <div id="content" class="row">
       <div ng-controller="ListCtrl">
-        <form ng-submit="updatePageVisits()">
+        <form ng-submit="updatePage()">
           <div class="row">
             <div class="large-2 columns">
               <label>Start Date</label>
@@ -34,6 +34,7 @@
           </div>
         </form>
 
+        <h2>Most Visited</h2>
         <div class="row">
           <div class="large-12 columns">
             <table>
@@ -42,7 +43,22 @@
               </thead>
               <tbody>
                 <tr ng-repeat="pageVisit in pageVisits">
-                  <td>{{pageVisit.page}}</td><td>{{pageVisit.visits}}</td>
+                  <td>{{pageVisit.page}}</td><td>{{pageVisit.result}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <h2>Most Engaging</h2>
+        <div class="row">
+          <div class="large-12 columns">
+            <table>
+              <thead>
+                <tr><th>Page</th><th>Time on Site</th></tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="pageEngagement in pageEngagements">
+                  <td>{{pageEngagement.page}}</td><td>{{pageEngagement.result / 60}}</td>
                 </tr>
               </tbody>
             </table>
