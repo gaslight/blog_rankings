@@ -50,7 +50,7 @@ ListCtrl = ($scope) ->
       })
 
       $scope.pageEngagements = []
-      executeRequest(request,$scope.pageEngagements)
+      executeRequest(request,$scope.pageEngagements,formatSecondsToMinutes)
 
   makeVisitsCall = (filter) ->
     gapi.client.load 'analytics', 'v3', -> 
@@ -60,7 +60,17 @@ ListCtrl = ($scope) ->
       })
 
       $scope.pageVisits = []
-      executeRequest(request,$scope.pageVisits)
+      executeRequest(request,$scope.pageVisits,formatNone)
+
+  formatNone = (value) -> 
+    value
+
+  formatSecondsToMinutes = (value) -> 
+    minutes = Math.floor(value / 60)
+    seconds = Math.round(value % 60)
+    minuteString = minutes.toString()
+    secondString = if seconds < 10 then "0" + seconds.toString() else seconds.toString()
+    minuteString + ":" + secondString 
 
   prepareRequest= (filter,params) ->
     standard_params = {
@@ -72,11 +82,11 @@ ListCtrl = ($scope) ->
     }
     gapi.client.analytics.data.ga.get(jQuery.extend(standard_params,params))
 
-  executeRequest = (request,models) ->
+  executeRequest = (request,models,formatter) ->
     request.execute (resp) ->
       results = []
       for row in resp.rows
-        result = {"page":row[0],"result":row[1]}
+        result = {"page":row[0],"result": formatter(row[1])}
         models.push result
       $scope.$apply()
 
