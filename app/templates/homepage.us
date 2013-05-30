@@ -39,11 +39,17 @@
           <div class="large-12 columns">
             <table>
               <thead>
-                <tr><th>Page</th><th>Visits</th></tr>
+                <tr><th>Page</th><th>Visits</th><th>Author</th></tr>
               </thead>
               <tbody>
                 <tr ng-repeat="pageVisit in pageVisits">
-                  <td>{{pageVisit.page}}</td><td>{{pageVisit.result}}</td>
+                  <td>{{pageVisit.page}}</td>
+                  <td>{{pageVisit.result}}</td>
+                  <td>
+                  <select>
+                    <option ng-repeat="author in authors()" value="{{author}}" ng-selected="authorAuthored(author,pageVisit.page)">{{author}}</option>
+                  </select>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -58,7 +64,7 @@
               </thead>
               <tbody>
                 <tr ng-repeat="pageEngagement in pageEngagements">
-                  <td>{{pageEngagement.page}}</td><td>{{pageEngagement.result / 60}}</td>
+                  <td>{{pageEngagement.page}}</td><td>{{pageEngagement.result}}</td>
                 </tr>
               </tbody>
             </table>

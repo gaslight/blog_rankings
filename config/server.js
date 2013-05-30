@@ -14,8 +14,12 @@
 
 module.exports = {
   drawRoutes: function(app) {
-    // app.get('/api/greeting/:message', function(req, res){
-    //   res.json({ message: "OK, "+req.params.message });
-    // });
+    app.get('/post_authors', function(req, res){
+      debugger
+      res.json({
+        '/post/48277232128/how-we-cuke':'jturnbull',
+        '/post/36883746175/using-local-libraries-with-cocoapods':'cdmwebs',
+      });
+    });
   }
 };

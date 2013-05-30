@@ -4,43 +4,35 @@ window.blogRanking = angular.module('blogRanking',[])
 #    $routeProvider.
 #      when('/', {controller: ListCtrl, templateUrl: 'list.html'}))
 
-class blogRanking.Filter
-  
-  dateFormat = "yyyy-MM-d"
-  
-  defaultStartDate: ->
-    date = null
-    today = Date.today()
-
-    if today.is().monday() || today.is().sunday()
-      date = today.last().monday()
-    else
-      date = today.last().week().last().monday()
-
-    date.toString(dateFormat)
-
-  defaultEndDate: ->
-    date = null
-    today = Date.today()
-
-    if today.is().sunday()
-      date = today
-    else
-      date = today.last().sunday()
-
-    date.toString(dateFormat)
-  
-  constructor: ->
-    @startDate = @defaultStartDate() unless @startDate
-    @endDate   = @defaultEndDate()   unless @endDate
-
-ListCtrl = ($scope) ->
+ListCtrl = ($scope, $http) ->
 
   $scope.filter = new blogRanking.Filter
 
   $scope.updatePage = -> 
-    makeVisitsCall($scope.filter)
+    fetchPostAuthors()
+    fetchVisits($scope.filter)
     makeEngagmentCall($scope.filter)
+
+  fetchPostAuthors = ->
+    $http(
+      url: "post_authors",
+      method: "GET",
+    ).success( 
+      (data, status, headers, config) -> 
+        $scope.postAuthors = data
+    ).error( 
+      (data, status, headers, config) -> 
+        $scope.status = status
+    ) 
+
+  $scope.authors = ->
+    authors = []
+    for post,author of $scope.postAuthors
+      authors.push author
+    authors
+
+  $scope.authorAuthored = (author,page) ->
+    $scope.postAuthors[page] == author
 
   makeEngagmentCall = (filter) ->
     gapi.client.load 'analytics', 'v3', -> 
@@ -52,7 +44,7 @@ ListCtrl = ($scope) ->
       $scope.pageEngagements = []
       executeRequest(request,$scope.pageEngagements,formatSecondsToMinutes)
 
-  makeVisitsCall = (filter) ->
+  fetchVisits = (filter) ->
     gapi.client.load 'analytics', 'v3', -> 
       request = prepareRequest(filter,{
         'metrics': 'ga:visits',
