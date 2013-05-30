@@ -52,6 +52,7 @@ ListCtrl = ($scope, $http) ->
       })
 
       $scope.pageVisits = []
+      $scope.authorVisits = new blogRanking.VisitsPerAuthor($scope.pageVisits,$scope.postAuthors).results()
       executeRequest(request,$scope.pageVisits,formatNone)
 
   formatNone = (value) -> 
