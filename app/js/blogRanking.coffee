@@ -11,7 +11,7 @@ ListCtrl = ($scope, $http) ->
   $scope.updatePage = -> 
     fetchPostAuthors()
     fetchVisits($scope.filter)
-    makeEngagmentCall($scope.filter)
+    fetchEngagements($scope.filter)
 
   fetchPostAuthors = ->
     $http(
@@ -34,7 +34,7 @@ ListCtrl = ($scope, $http) ->
   $scope.authorAuthored = (author,page) ->
     $scope.postAuthors[page] == author
 
-  makeEngagmentCall = (filter) ->
+  fetchEngagements = (filter) ->
     gapi.client.load 'analytics', 'v3', -> 
       request = prepareRequest(filter,{
         'metrics': 'ga:avgTimeOnSite',
