@@ -14,12 +14,12 @@
 
 module.exports = {
   drawRoutes: function(app) {
-    app.get('/post_authors', function(req, res){
+    app.get('/posts', function(req, res){
       debugger
-      res.json({
-        '/post/48277232128/how-we-cuke':'jturnbull',
-        '/post/36883746175/using-local-libraries-with-cocoapods':'cdmwebs',
-      });
+      res.json(
+        [{'url':'/post/51721063999/chris-glass-of-wire-twine-joined-us-to-talk','author':'mitchlloyd'},
+         {'url':'/post/36883746175/using-local-libraries-with-cocoapods','author':'cdmwebs'}]
+      );
     });
   }
 };

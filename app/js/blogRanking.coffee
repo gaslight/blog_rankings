@@ -9,30 +9,25 @@ ListCtrl = ($scope, $http) ->
   $scope.filter = new blogRanking.Filter
 
   $scope.updatePage = -> 
-    fetchPostAuthors()
-    fetchVisits($scope.filter)
-    fetchEngagements($scope.filter)
+    fetchPosts()
 
-  fetchPostAuthors = ->
+  fetchPosts = ->
     $http(
-      url: "post_authors",
+      url: "posts",
       method: "GET",
     ).success( 
       (data, status, headers, config) -> 
-        $scope.postAuthors = data
+        postsCollection = new blogRanking.PostCollection(data)
+        applyPostVisits(postsCollection,$scope.filter)
+        #fetchPostEngagements($scope.filter)
     ).error( 
       (data, status, headers, config) -> 
         $scope.status = status
     ) 
 
   $scope.authors = ->
-    authors = []
-    for post,author of $scope.postAuthors
-      authors.push author
-    authors
-
-  $scope.authorAuthored = (author,page) ->
-    $scope.postAuthors[page] == author
+    postsWithAuthors = _.select($scope.posts, (post) -> post.author )
+    _.collect(postsWithAuthors, (post) -> post.author)
 
   fetchEngagements = (filter) ->
     gapi.client.load 'analytics', 'v3', -> 
@@ -41,22 +36,18 @@ ListCtrl = ($scope, $http) ->
         'sort': '-ga:avgTimeOnSite',
       })
 
-      $scope.pageEngagements = []
-      executeRequest(request,$scope.pageEngagements,formatSecondsToMinutes)
+      executeRequest(request,formatSecondsToMinutes)
 
-  fetchVisits = (filter) ->
+  applyPostVisits = (postsCollection,filter) ->
     gapi.client.load 'analytics', 'v3', -> 
       request = prepareRequest(filter,{
         'metrics': 'ga:visits',
         'sort': '-ga:visits',
       })
-
-      $scope.pageVisits = []
-      $scope.authorVisits = new blogRanking.VisitsPerAuthor($scope.pageVisits,$scope.postAuthors).results()
-      executeRequest(request,$scope.pageVisits,formatNone)
-
-  formatNone = (value) -> 
-    value
+      request.execute (response) ->
+        postsCollection.applyVisits(response.rows)
+        $scope.posts = postsCollection.posts
+        $scope.$apply()
 
   formatSecondsToMinutes = (value) -> 
     minutes = Math.floor(value / 60)
@@ -74,14 +65,6 @@ ListCtrl = ($scope, $http) ->
         'max-results': '10',
     }
     gapi.client.analytics.data.ga.get(jQuery.extend(standard_params,params))
-
-  executeRequest = (request,models,formatter) ->
-    request.execute (resp) ->
-      results = []
-      for row in resp.rows
-        result = {"page":row[0],"result": formatter(row[1])}
-        models.push result
-      $scope.$apply()
 
   $scope.updatePage();
 

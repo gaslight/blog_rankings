@@ -36,18 +36,36 @@
 
         <h2>Most Visited</h2>
         <div class="row">
-          <div class="large-12 columns">
+          <div class="large-6 columns">
             <table>
               <thead>
                 <tr><th>Page</th><th>Visits</th><th>Author</th></tr>
               </thead>
               <tbody>
-                <tr ng-repeat="pageVisit in pageVisits">
-                  <td>{{pageVisit.page}}</td>
-                  <td>{{pageVisit.result}}</td>
+                <tr ng-repeat="post in posts">
+                  <td>{{post.url}}</td>
+                  <td>{{post.visits}}</td>
                   <td>
                   <select>
-                    <option ng-repeat="author in authors()" value="{{author}}" ng-selected="authorAuthored(author,pageVisit.page)">{{author}}</option>
+                    <option ng-repeat="author in authors()" value="{{author}}" ng-selected="post.author == author">{{author}}</option>
+                  </select>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="large-6 columns">
+            <table>
+              <thead>
+                <tr><th>Page</th><th>Visits</th><th>Author</th></tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="author in authors">
+                  <td>{{author.name}}</td>
+                  <td>{{author.visits}}</td>
+                  <td>
+                  <select>
+                    <option ng-repeat="author in authors()" value="{{author}}" ng-selected="post.author == author">{{author}}</option>
                   </select>
                   </td>
                 </tr>
@@ -63,8 +81,8 @@
                 <tr><th>Page</th><th>Time on Site</th></tr>
               </thead>
               <tbody>
-                <tr ng-repeat="pageEngagement in pageEngagements">
-                  <td>{{pageEngagement.page}}</td><td>{{pageEngagement.result}}</td>
+                <tr ng-repeat="post in posts">
+                  <td>{{post.url}}</td><td>{{post.engagement}}</td>
                 </tr>
               </tbody>
             </table>
