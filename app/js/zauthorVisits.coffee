@@ -1,5 +1,14 @@
 class blogRanking.AuthorCollection
 
+  compileTotalPosts: (posts) ->
+    authors = []
+    for post in posts
+      if author = _.detect(authors,(author) -> post.author == author.name)
+        author.totalPosts = parseInt(author.totalPosts) + 1
+      else
+        authors.push({'name':post.author,'totalPosts':1}) if post.author
+    _.sortBy(authors,(author) -> 0 - author.totalPosts)
+
   compileVisits: (posts) ->
     authors = []
     for post in posts

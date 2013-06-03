@@ -94,6 +94,22 @@
             </table>
           </div>
         </div>
+        <h2>Most Prolific</h2>
+        <div class="row">
+          <div class="large-6 columns">
+            <table>
+              <thead>
+                <tr><th>Author</th><th>Total Posts</th></tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="author in authorPosts">
+                  <td>{{author.name}}</td>
+                  <td>{{author.totalPosts}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   </body>

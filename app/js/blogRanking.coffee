@@ -25,6 +25,7 @@ ListCtrl = ($scope, $http) ->
     ).success( 
       (data, status, headers, config) -> 
         postsCollection = new blogRanking.PostCollection(data)
+        $scope.authorPosts = new blogRanking.AuthorCollection().compileTotalPosts(postsCollection.posts)
         applyPostVisits(postsCollection,$scope.filter)
         applyPostEngagements(postsCollection,$scope.filter)
     ).error( 

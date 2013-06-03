@@ -1,6 +1,20 @@
 describe "AuthorCollection", ->
 
   describe ".compileVisits", ->
+    describe "totals posts for each author", ->
+      Given -> @posts = 
+        [{'url':'/post1','author':'cdmwebs'},
+         {'url':'/post2','author':'jturnbull'},
+         {'url':'/post3','author':'jturnbull'},
+         {'url':'/post4','author':'mitchlloyd'},
+         {'url':'/post5','author':'jturnbull'},
+         {'url':'/post6','author':'cdmwebs'},]
+      And -> @authors = new blogRanking.AuthorCollection
+      Then -> expect(@authors.compileTotalPosts(@posts)).toEqual(
+        [{'name':'jturnbull','totalPosts':3},
+         {'name':'cdmwebs','totalPosts':2},
+         {'name':'mitchlloyd','totalPosts':1},])
+
     describe "totals visits for each author", ->
       Given -> @posts = 
         [{'url':'/post1','author':'jturnbull','visits':'3','timeOnSite':'1397.0'},
