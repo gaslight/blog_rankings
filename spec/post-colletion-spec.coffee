@@ -31,5 +31,5 @@ describe "PostCollection", ->
          ['/post2','169.0']]
       When -> @postCollection.applyTimeOnSite(@xdata)
       Then -> expect(@postCollection.posts).toEqual(
-        [{'url':'/post1','author':'jturnbull','timeOnSite':'22:59'},
-         {'url':'/post2','author':'cdmwebs','timeOnSite':'2:49'}])
+        [{'url':'/post1','author':'jturnbull','timeOnSite':1379},
+         {'url':'/post2','author':'cdmwebs','timeOnSite':169}])

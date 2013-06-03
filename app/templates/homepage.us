@@ -45,11 +45,7 @@
                 <tr ng-repeat="post in postVisits">
                   <td>{{post.url}}</td>
                   <td>{{post.visits}}</td>
-                  <td>
-                  <select>
-                    <option ng-repeat="author in authors()" value="{{author}}" ng-selected="post.author == author">{{author}}</option>
-                  </select>
-                  </td>
+                  <td>{{post.author}}</td>
                 </tr>
               </tbody>
             </table>
@@ -57,17 +53,12 @@
           <div class="large-6 columns">
             <table>
               <thead>
-                <tr><th>Page</th><th>Visits</th><th>Author</th></tr>
+                <tr><th>Author</th><th>Visit Total</th></tr>
               </thead>
               <tbody>
-                <tr ng-repeat="author in authors">
+                <tr ng-repeat="author in authorVisits">
                   <td>{{author.name}}</td>
                   <td>{{author.visits}}</td>
-                  <td>
-                  <select>
-                    <option ng-repeat="author in authors()" value="{{author}}" ng-selected="post.author == author">{{author}}</option>
-                  </select>
-                  </td>
                 </tr>
               </tbody>
             </table>
@@ -75,14 +66,29 @@
         </div>
         <h2>Most Engaging</h2>
         <div class="row">
-          <div class="large-12 columns">
+          <div class="large-6 columns">
             <table>
               <thead>
-                <tr><th>Page</th><th>Time on Site</th></tr>
+                <tr><th>Page</th><th>Time on Site</th><th>Author</th></tr>
               </thead>
               <tbody>
                 <tr ng-repeat="post in postEngagements">
-                  <td>{{post.url}}</td><td>{{post.timeOnSite}}</td>
+                  <td>{{post.url}}</td>
+                  <td>{{formatSecondsToMinutes(post.timeOnSite)}}</td>
+                  <td>{{post.author}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="large-6 columns">
+            <table>
+              <thead>
+                <tr><th>Author</th><th>Total Time on Site</th></tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="author in authorEngagements">
+                  <td>{{author.name}}</td>
+                  <td>{{formatSecondsToMinutes(author.timeOnSite)}}</td>
                 </tr>
               </tbody>
             </table>

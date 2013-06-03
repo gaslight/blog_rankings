@@ -8,6 +8,13 @@ ListCtrl = ($scope, $http) ->
 
   $scope.filter = new blogRanking.Filter
 
+  $scope.formatSecondsToMinutes = (value) -> 
+    minutes = Math.floor(value / 60)
+    seconds = Math.round(value % 60)
+    minuteString = minutes.toString()
+    secondString = if seconds < 10 then "0" + seconds.toString() else seconds.toString()
+    minuteString + ":" + secondString 
+
   $scope.updatePage = -> 
     fetchPosts()
 
@@ -25,10 +32,6 @@ ListCtrl = ($scope, $http) ->
         $scope.status = status
     ) 
 
-  $scope.authors = ->
-    postsWithAuthors = _.select($scope.posts, (post) -> post.author )
-    _.collect(postsWithAuthors, (post) -> post.author)
-
   applyPostVisits = (postsCollection,filter) ->
     gapi.client.load 'analytics', 'v3', -> 
       request = prepareRequest(filter,{
@@ -38,6 +41,7 @@ ListCtrl = ($scope, $http) ->
       request.execute (response) ->
         postsCollection.applyVisits(response.rows)
         $scope.postVisits = postsCollection.posts
+        $scope.authorVisits = new blogRanking.AuthorCollection().compileVisits($scope.postVisits)
         $scope.$apply()
 
   applyPostEngagements = (postsCollection,filter) ->
@@ -49,6 +53,7 @@ ListCtrl = ($scope, $http) ->
       request.execute (response) ->
         postsCollection.applyTimeOnSite(response.rows)
         $scope.postEngagements = postsCollection.posts
+        $scope.authorEngagements = new blogRanking.AuthorCollection().compileEngagements($scope.postEngagements)
         $scope.$apply()
 
   prepareRequest= (filter,params) ->
