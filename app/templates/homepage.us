@@ -42,7 +42,7 @@
                 <tr><th>Page</th><th>Visits</th><th>Author</th></tr>
               </thead>
               <tbody>
-                <tr ng-repeat="post in posts">
+                <tr ng-repeat="post in postVisits">
                   <td>{{post.url}}</td>
                   <td>{{post.visits}}</td>
                   <td>
@@ -81,7 +81,7 @@
                 <tr><th>Page</th><th>Time on Site</th></tr>
               </thead>
               <tbody>
-                <tr ng-repeat="post in posts">
+                <tr ng-repeat="post in postEngagements">
                   <td>{{post.url}}</td><td>{{post.timeOnSite}}</td>
                 </tr>
               </tbody>

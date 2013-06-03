@@ -19,7 +19,7 @@ ListCtrl = ($scope, $http) ->
       (data, status, headers, config) -> 
         postsCollection = new blogRanking.PostCollection(data)
         applyPostVisits(postsCollection,$scope.filter)
-        #fetchPostEngagements($scope.filter)
+        applyPostEngagements(postsCollection,$scope.filter)
     ).error( 
       (data, status, headers, config) -> 
         $scope.status = status
@@ -37,9 +37,7 @@ ListCtrl = ($scope, $http) ->
       })
       request.execute (response) ->
         postsCollection.applyVisits(response.rows)
-        applyPostEngagements(postsCollection,$scope.filter)
-        $scope.posts = postsCollection.posts
-        debugger
+        $scope.postVisits = postsCollection.posts
         $scope.$apply()
 
   applyPostEngagements = (postsCollection,filter) ->
@@ -49,10 +47,8 @@ ListCtrl = ($scope, $http) ->
         'sort': '-ga:avgTimeOnSite',
       })
       request.execute (response) ->
-        postsCollection.posts = $scope.posts
         postsCollection.applyTimeOnSite(response.rows)
-        $scope.posts = postsCollection.posts
-        debugger
+        $scope.postEngagements = postsCollection.posts
         $scope.$apply()
 
   prepareRequest= (filter,params) ->
