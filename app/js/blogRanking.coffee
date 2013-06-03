@@ -29,15 +29,6 @@ ListCtrl = ($scope, $http) ->
     postsWithAuthors = _.select($scope.posts, (post) -> post.author )
     _.collect(postsWithAuthors, (post) -> post.author)
 
-  fetchEngagements = (filter) ->
-    gapi.client.load 'analytics', 'v3', -> 
-      request = prepareRequest(filter,{
-        'metrics': 'ga:avgTimeOnSite',
-        'sort': '-ga:avgTimeOnSite',
-      })
-
-      executeRequest(request,formatSecondsToMinutes)
-
   applyPostVisits = (postsCollection,filter) ->
     gapi.client.load 'analytics', 'v3', -> 
       request = prepareRequest(filter,{
@@ -46,15 +37,23 @@ ListCtrl = ($scope, $http) ->
       })
       request.execute (response) ->
         postsCollection.applyVisits(response.rows)
+        applyPostEngagements(postsCollection,$scope.filter)
         $scope.posts = postsCollection.posts
+        debugger
         $scope.$apply()
 
-  formatSecondsToMinutes = (value) -> 
-    minutes = Math.floor(value / 60)
-    seconds = Math.round(value % 60)
-    minuteString = minutes.toString()
-    secondString = if seconds < 10 then "0" + seconds.toString() else seconds.toString()
-    minuteString + ":" + secondString 
+  applyPostEngagements = (postsCollection,filter) ->
+    gapi.client.load 'analytics', 'v3', -> 
+      request = prepareRequest(filter,{
+        'metrics': 'ga:avgTimeOnSite',
+        'sort': '-ga:avgTimeOnSite',
+      })
+      request.execute (response) ->
+        postsCollection.posts = $scope.posts
+        postsCollection.applyTimeOnSite(response.rows)
+        $scope.posts = postsCollection.posts
+        debugger
+        $scope.$apply()
 
   prepareRequest= (filter,params) ->
     standard_params = {
