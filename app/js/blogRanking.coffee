@@ -8,6 +8,9 @@ ListCtrl = ($scope, $http) ->
 
   $scope.filter = new blogRanking.Filter
 
+  $scope.updateX = ->
+    $scope.posts.byVisits()[0].visits = 1000
+
   $scope.formatSecondsToMinutes = (value) -> 
     minutes = Math.floor(value / 60)
     seconds = Math.round(value % 60)
@@ -24,37 +27,32 @@ ListCtrl = ($scope, $http) ->
       method: "GET",
     ).success( 
       (data, status, headers, config) -> 
-        postsCollection = new blogRanking.PostCollection(data)
-        $scope.authorPosts = new blogRanking.AuthorCollection().compileTotalPosts(postsCollection.posts)
-        applyPostVisits(postsCollection,$scope.filter)
-        applyPostEngagements(postsCollection,$scope.filter)
+        $scope.posts = new blogRanking.PostCollection(data)
+        applyVisits($scope.posts,$scope.filter)
     ).error( 
       (data, status, headers, config) -> 
         $scope.status = status
     ) 
 
-  applyPostVisits = (postsCollection,filter) ->
+  applyVisits = (posts,filter) ->
     gapi.client.load 'analytics', 'v3', -> 
       request = prepareRequest(filter,{
         'metrics': 'ga:visits',
         'sort': '-ga:visits',
       })
       request.execute (response) ->
-        postsCollection.applyVisits(response.rows)
-        $scope.postVisits = postsCollection.posts
-        $scope.authorVisits = new blogRanking.AuthorCollection().compileVisits($scope.postVisits)
-        $scope.$apply()
+        posts.applyVisits(response.rows)
+        applyEngagement(posts,$scope.filter)
 
-  applyPostEngagements = (postsCollection,filter) ->
+  applyEngagement = (posts,filter) ->
     gapi.client.load 'analytics', 'v3', -> 
       request = prepareRequest(filter,{
         'metrics': 'ga:avgTimeOnSite',
         'sort': '-ga:avgTimeOnSite',
       })
       request.execute (response) ->
-        postsCollection.applyTimeOnSite(response.rows)
-        $scope.postEngagements = postsCollection.posts
-        $scope.authorEngagements = new blogRanking.AuthorCollection().compileEngagements($scope.postEngagements)
+        posts.applyTimeOnSite(response.rows)
+        $scope.authors = new blogRanking.AuthorCollection($scope.posts.all())
         $scope.$apply()
 
   prepareRequest= (filter,params) ->

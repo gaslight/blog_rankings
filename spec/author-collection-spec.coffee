@@ -1,50 +1,16 @@
 describe "AuthorCollection", ->
+  describe ".byTotalVisits", ->
+    describe "sorts authors by total visits", ->
+      Given -> @author1 = new blogRanking.Author('jturnbull')
+      And   -> @author2 = new blogRanking.Author('cdmwebs')
 
-  describe ".compileVisits", ->
-    describe "totals posts for each author", ->
-      Given -> @posts = 
-        [{'url':'/post1','author':'cdmwebs'},
-         {'url':'/post2','author':'jturnbull'},
-         {'url':'/post3','author':'jturnbull'},
-         {'url':'/post4','author':'mitchlloyd'},
-         {'url':'/post5','author':'jturnbull'},
-         {'url':'/post6','author':'cdmwebs'},]
-      And -> @authors = new blogRanking.AuthorCollection
-      Then -> expect(@authors.compileTotalPosts(@posts)).toEqual(
-        [{'name':'jturnbull','totalPosts':3},
-         {'name':'cdmwebs','totalPosts':2},
-         {'name':'mitchlloyd','totalPosts':1},])
-
-    describe "totals visits for each author", ->
-      Given -> @posts = 
-        [{'url':'/post1','author':'jturnbull','visits':'3','timeOnSite':'1397.0'},
-         {'url':'/post2','author':'cdmwebs','visits':'5','timeOnSite':'456.0'},
-         {'url':'/post3','author':'jturnbull','visits':'6','timeOnSite':'98.0'},
-         {'url':'/post4','author':'cdmwebs','visits':'6','timeOnSite':'33.0'},]
-      And -> @authors = new blogRanking.AuthorCollection
-      Then -> expect(@authors.compileVisits(@posts)).toEqual(
-        [{'name':'cdmwebs','visits':11},
-         {'name':'jturnbull','visits':9},])
-
-    describe "skips posts that are missing authors", ->
-      Given -> @posts = 
-        [{'url':'/post1','author':'jturnbull','visits':'3'},
-         {'url':'/post2','author':'cdmwebs','visits':'5'},
-         {'url':'/post3','author':undefined,'visits':'6'},
-         {'url':'/post4','author':'cdmwebs','visits':'6'}]
-      And -> @authors = new blogRanking.AuthorCollection
-      Then -> expect(@authors.compileVisits(@posts)).toEqual(
-        [{'name':'cdmwebs','visits':11},
-         {'name':'jturnbull','visits':3},])
-
-  describe ".compileEngagements", ->
-    describe "totals engagements for each author", ->
-      Given -> @posts = 
-        [{'url':'/post1','author':'jturnbull','visits':'3','timeOnSite':'1397.0'},
-         {'url':'/post2','author':'cdmwebs','visits':'5','timeOnSite':'456.0'},
-         {'url':'/post3','author':'jturnbull','visits':'6','timeOnSite':'98.0'},
-         {'url':'/post4','author':'cdmwebs','visits':'6','timeOnSite':'33.0'},]
-      And -> @authors = new blogRanking.AuthorCollection
-      Then -> expect(@authors.compileEngagements(@posts)).toEqual(
-        [{'name':'jturnbull','timeOnSite':1495},
-         {'name':'cdmwebs','timeOnSite':489},])
+      And   -> @post1 = new blogRanking.Post('/post1',@author1)
+      And   -> @post2 = new blogRanking.Post('/post2',@author1)
+      And   -> @post3 = new blogRanking.Post('/post3',@author2)
+      And   -> @post4 = new blogRanking.Post('/post4',@author2)
+      When  -> @post1.visits = 1 
+      And   -> @post2.visits = 2 
+      And   -> @post3.visits = 3 
+      And   -> @post4.visits = 5 
+      And   -> @authorCollection = new blogRanking.AuthorCollection([@post1,@post2,@post3,@post4])
+      Then  -> expect(@authorCollection.byTotalVisits()).toEqual([@author2,@author1])

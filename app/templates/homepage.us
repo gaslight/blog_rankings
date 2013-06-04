@@ -17,6 +17,9 @@
 
     <div id="content" class="row">
       <div ng-controller="ListCtrl">
+    <form ng-submit="updateX()">
+      <input type="submit" value="Update" class="button small"/>
+    </form>
         <form ng-submit="updatePage()">
           <div class="row">
             <div class="large-2 columns">
@@ -42,10 +45,10 @@
                 <tr><th>Page</th><th>Visits</th><th>Author</th></tr>
               </thead>
               <tbody>
-                <tr ng-repeat="post in postVisits">
+                <tr ng-repeat="post in posts.byVisits()">
                   <td>{{post.url}}</td>
                   <td>{{post.visits}}</td>
-                  <td>{{post.author}}</td>
+                  <td>{{post.author.name}}</td>
                 </tr>
               </tbody>
             </table>
@@ -56,9 +59,9 @@
                 <tr><th>Author</th><th>Visit Total</th></tr>
               </thead>
               <tbody>
-                <tr ng-repeat="author in authorVisits">
+                <tr ng-repeat="author in authors.byTotalVisits()">
                   <td>{{author.name}}</td>
-                  <td>{{author.visits}}</td>
+                  <td>{{author.totalVisits()}}</td>
                 </tr>
               </tbody>
             </table>
@@ -72,10 +75,10 @@
                 <tr><th>Page</th><th>Time on Site</th><th>Author</th></tr>
               </thead>
               <tbody>
-                <tr ng-repeat="post in postEngagements">
+                <tr ng-repeat="post in posts.byTimeOnSite()">
                   <td>{{post.url}}</td>
                   <td>{{formatSecondsToMinutes(post.timeOnSite)}}</td>
-                  <td>{{post.author}}</td>
+                  <td>{{post.author.name}}</td>
                 </tr>
               </tbody>
             </table>
@@ -86,9 +89,9 @@
                 <tr><th>Author</th><th>Total Time on Site</th></tr>
               </thead>
               <tbody>
-                <tr ng-repeat="author in authorEngagements">
+                <tr ng-repeat="author in authors.byAvgTimeOnSite()">
                   <td>{{author.name}}</td>
-                  <td>{{formatSecondsToMinutes(author.timeOnSite)}}</td>
+                  <td>{{formatSecondsToMinutes(author.avgTimeOnSite())}}</td>
                 </tr>
               </tbody>
             </table>
@@ -102,9 +105,9 @@
                 <tr><th>Author</th><th>Total Posts</th></tr>
               </thead>
               <tbody>
-                <tr ng-repeat="author in authorPosts">
+                <tr ng-repeat="author in authors.byPostsCount()">
                   <td>{{author.name}}</td>
-                  <td>{{author.totalPosts}}</td>
+                  <td>{{author.totalPosts()}}</td>
                 </tr>
               </tbody>
             </table>
