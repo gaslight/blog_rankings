@@ -1,15 +1,26 @@
 window.blogRanking = angular.module('blogRanking',[])
+window.blogRanking.factory('AuthorData', -> 
+  new blogRanking.AuthorCollection())
 
 #  config(($routeProvider) -> 
 #    $routeProvider.
 #      when('/', {controller: ListCtrl, templateUrl: 'list.html'}))
 
-ListCtrl = ($scope, $http) ->
+AuthorSelectionCtrl = ($scope,AuthorData) ->
+  $scope.authors = AuthorData
+
+  $scope.authorSelectionEnabled = false
+
+  $scope.toggleAuthorSelection = ->
+    $scope.authorSelectionEnabled = !$scope.authorSelectionEnabled
+
+ListCtrl = ($scope, $http, AuthorData) ->
 
   $scope.filter = new blogRanking.Filter
 
   $scope.updateX = ->
-    $scope.posts.byVisits()[0].visits = 1000
+    $scope.posts.byVisits()[0].author.name = 3
+    $scope.authors.all()[0].name = "afd"
 
   $scope.formatSecondsToMinutes = (value) -> 
     minutes = Math.floor(value / 60)
@@ -27,7 +38,7 @@ ListCtrl = ($scope, $http) ->
       method: "GET",
     ).success( 
       (data, status, headers, config) -> 
-        $scope.posts = new blogRanking.PostCollection(data)
+        $scope.posts = new blogRanking.PostCollection(data) 
         applyVisits($scope.posts,$scope.filter)
     ).error( 
       (data, status, headers, config) -> 
@@ -52,7 +63,8 @@ ListCtrl = ($scope, $http) ->
       })
       request.execute (response) ->
         posts.applyTimeOnSite(response.rows)
-        $scope.authors = new blogRanking.AuthorCollection($scope.posts.all())
+        $scope.authors = AuthorData 
+        $scope.authors.assignPosts($scope.posts) 
         $scope.$apply()
 
   prepareRequest= (filter,params) ->
@@ -68,6 +80,7 @@ ListCtrl = ($scope, $http) ->
   $scope.updatePage();
 
 blogRanking.controller 'ListCtrl', ListCtrl
+blogRanking.controller 'AuthorSelectionCtrl', AuthorSelectionCtrl
 
 blogRanking.directive 'datepicker', -> 
   (scope, element, attrs) ->

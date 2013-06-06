@@ -1,12 +1,22 @@
 class blogRanking.PostCollection
 
   constructor: (posts) ->
-    @posts = for post in posts
-      author = new blogRanking.Author(post.author.name)
-      new blogRanking.Post(post.url,author)
+    @posts = []
+    for post in posts
+      author = @authorCollection().findOrCreateByName(post.author.name)
+      @posts.push(new blogRanking.Post(post.url,author))
 
   all: ->
     @posts
+
+  authorCollection: ->
+    new blogRanking.AuthorCollection(@)
+
+  authors: ->
+    @authorCollection().all()
+
+  findByAuthor: (author) ->
+    _.select(@posts, (post) -> post.author == author)
 
   byVisits: ->
     _.sortBy(

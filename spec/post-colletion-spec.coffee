@@ -5,12 +5,24 @@ describe "PostCollection", ->
   Given -> @authorData = [
     {'url':'/post1','author':{'name':'jturnbull'}},
     {'url':'/post2','author':{'name':'cdmwebs'}},
+    {'url':'/post3','author':{'name':'jturnbull'}},
   ]
   And -> @postCollection = new blogRanking.PostCollection(@authorData)
   describe ".posts", ->
     Then -> expect(@postCollection.posts).toEqual([
-      {'url':'/post1','author':@author1},
-      {'url':'/post2','author':@author2},
+      new blogRanking.Post('/post1',@author1),
+      new blogRanking.Post('/post2',@author2),
+      new blogRanking.Post('/post3',@author1),
+    ])
+  describe ".authors",->
+    Then -> expect(@postCollection.authors()).toEqual([
+      @author1,
+      @author2,
+    ])
+  describe ".findByAuthor",->
+    Then -> expect(@postCollection.findByAuthor(@postCollection.authors()[0])).toEqual([
+      new blogRanking.Post('/post1',@author1),
+      new blogRanking.Post('/post3',@author1),
     ])
   describe ".applyVisits", ->
     Given -> @data = [
@@ -22,6 +34,7 @@ describe "PostCollection", ->
       Then -> expect(@postCollection.posts).toEqual([
         {'url':'/post1','author':@author1,'visits':3},
         {'url':'/post2','author':@author2,'visits':5},
+        {'url':'/post3','author':@author1},
       ])
     describe "can be sorted by visit desc", ->
       Then -> expect(@postCollection.byVisits()).toEqual([
@@ -32,12 +45,13 @@ describe "PostCollection", ->
       Given -> @data =
         [['/post1',3],
          ['/post2',5],
-         ['/post3',6]]
+         ['/post4',6]]
       When -> @postCollection.applyVisits(@data)
       Then -> expect(@postCollection.posts).toEqual(
         [{'url':'/post1','author':@author1,'visits':3},
          {'url':'/post2','author':@author2,'visits':5},
-         {'url':'/post3','author':@author3,'visits':6}])
+         {'url':'/post3','author':@author1},
+         {'url':'/post4','author':@author3,'visits':6}])
   describe ".applyTimeOnSite", ->
       Given -> @data =
         [['/post1','169.0'],
@@ -47,6 +61,7 @@ describe "PostCollection", ->
         Then -> expect(@postCollection.posts).toEqual([
           {'url':'/post1','author':@author1,'timeOnSite':169},
           {'url':'/post2','author':@author2,'timeOnSite':1379},
+          {'url':'/post3','author':@author1},
         ])
       describe "can be sorted by data desc", ->
         Then -> expect(@postCollection.byTimeOnSite()).toEqual([

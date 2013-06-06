@@ -37,7 +37,7 @@
           </div>
         </form>
 
-        <h2>Most Visited</h2>
+        <h4>Most Visited</h4>
         <div class="row">
           <div class="large-6 columns">
             <table>
@@ -48,7 +48,17 @@
                 <tr ng-repeat="post in posts.byVisits()">
                   <td>{{post.url}}</td>
                   <td>{{post.visits}}</td>
-                  <td>{{post.author.name}}</td>
+                  <td>
+                    <div ng-controller="AuthorSelectionCtrl">
+                      <span ng-hide="authorSelectionEnabled" ng-click="toggleAuthorSelection()">{{post.author.name}}</span>
+                      <span ng-show="authorSelectionEnabled" ng-click="toggleAuthorSelection()">
+                        <select name"author" ng-model="post.author" ng-change="toggleAuthorSelection()" ng-options="author as author.name for author in authors.all()">
+                        </select>
+                          
+                      </span>
+                    </div>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -61,13 +71,13 @@
               <tbody>
                 <tr ng-repeat="author in authors.byTotalVisits()">
                   <td>{{author.name}}</td>
-                  <td>{{author.totalVisits()}}</td>
+                  <td>{{posts.authorCollection().totalVisits(author)}}</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-        <h2>Most Engaging</h2>
+        <h4>Most Engaging</h4>
         <div class="row">
           <div class="large-6 columns">
             <table>
@@ -97,7 +107,7 @@
             </table>
           </div>
         </div>
-        <h2>Most Prolific</h2>
+        <h4>Most Prolific</h4>
         <div class="row">
           <div class="large-6 columns">
             <table>

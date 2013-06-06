@@ -1,16 +1,33 @@
 describe "AuthorCollection", ->
+  Given -> @authorData = [
+    {'url':'/post1','author':{'name':'jturnbull'}},
+    {'url':'/post2','author':{'name':'cdmwebs'}},
+    {'url':'/post3','author':{'name':'cdmwebs'}},
+    {'url':'/post4','author':{'name':'jturnbull'}},
+  ]
+  describe ".findOrCreateByName", ->
+    When -> @postCollection = new blogRanking.PostCollection(@authorData)
+    And  -> @authorCollection = new blogRanking.AuthorCollection(@postCollection)
+    describe "when author exists", ->
+      When -> @author = @authorCollection.findOrCreateByName('jturnbull')
+      Then -> expect(@author).toEqual(new blogRanking.Author('jturnbull'))
+      And  -> expect(@authorCollection.all().length).toEqual(2)
+  describe ".all", ->
+    When -> @postCollection = new blogRanking.PostCollection(@authorData)
+    And  -> @authorCollection = new blogRanking.AuthorCollection(@postCollection)
+    Then -> expect(@authorCollection.all()).toEqual([
+      new blogRanking.Author('jturnbull'),
+      new blogRanking.Author('cdmwebs'),
+    ])
   describe ".byTotalVisits", ->
     describe "sorts authors by total visits", ->
-      Given -> @author1 = new blogRanking.Author('jturnbull')
-      And   -> @author2 = new blogRanking.Author('cdmwebs')
-
-      And   -> @post1 = new blogRanking.Post('/post1',@author1)
-      And   -> @post2 = new blogRanking.Post('/post2',@author1)
-      And   -> @post3 = new blogRanking.Post('/post3',@author2)
-      And   -> @post4 = new blogRanking.Post('/post4',@author2)
-      When  -> @post1.visits = 1 
-      And   -> @post2.visits = 2 
-      And   -> @post3.visits = 3 
-      And   -> @post4.visits = 5 
-      And   -> @authorCollection = new blogRanking.AuthorCollection([@post1,@post2,@post3,@post4])
-      Then  -> expect(@authorCollection.byTotalVisits()).toEqual([@author2,@author1])
+      Given -> @visitData = [
+        ['/post1',3],
+        ['/post2',5],
+        ['/post3',7],
+        ['/post4',4],
+      ]
+      And   -> @postCollection = new blogRanking.PostCollection(@authorData)
+      When  -> @postCollection.applyVisits(@visitData) 
+      And   -> @authorCollection = new blogRanking.AuthorCollection(@postCollection)
+      Then  -> expect(@authorCollection.byTotalVisits()).toEqual([new blogRanking.Author('cdmwebs'),new blogRanking.Author('jturnbull')])
