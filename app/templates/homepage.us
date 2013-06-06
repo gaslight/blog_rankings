@@ -50,7 +50,7 @@
                   <td>{{post.visits}}</td>
                   <td>
                     <div ng-controller="AuthorSelectionCtrl">
-                      <span ng-hide="authorSelectionEnabled" ng-click="toggleAuthorSelection()">{{post.author.name}}</span>
+                      <span ng-hide="authorSelectionEnabled" ng-click="toggleAuthorSelection()">{{post.author.name || "[not set]"}}</span>
                       <span ng-show="authorSelectionEnabled" ng-click="toggleAuthorSelection()">
                         <select name"author" ng-model="post.author" ng-change="toggleAuthorSelection()" ng-options="author as author.name for author in authors.all()">
                         </select>
@@ -70,7 +70,7 @@
               </thead>
               <tbody>
                 <tr ng-repeat="author in authors.byTotalVisits()">
-                  <td>{{author.name}}</td>
+                  <td>{{author.name || "[not set]"}}</td>
                   <td>{{posts.authorCollection().totalVisits(author)}}</td>
                 </tr>
               </tbody>

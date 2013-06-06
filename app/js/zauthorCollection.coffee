@@ -1,27 +1,43 @@
 class blogRanking.AuthorCollection
 
   constructor: (@postCollection) -> 
-    @authors = [
-#      new blogRanking.Author('jturnbull'),
-#      new blogRanking.Author('agilous'),
-#      new blogRanking.Author('cdmwebs'),
-#      new blogRanking.Author('dewaynegreenwood'),
-#      new blogRanking.Author('dougalcorn'),
-#      new blogRanking.Author('mysterycoder'),
-#      new blogRanking.Author('rockwoo'),
-#      new blogRanking.Author('ryan-gaslight'),
-#      new blogRanking.Author('st23am'),
-#      new blogRanking.Author('kristinlasita'),
-#      new blogRanking.Author('mitchlloyd'),
-#      new blogRanking.Author('nockitoff'),
-#      new blogRanking.Author('pkananen'),
-#      new blogRanking.Author('tammygambrel'),
+    @authorNames = [
+      'jturnbull',
+      'agilous',
+      'cdmwebs',
+      'dewaynegreenwood',
+      'dougalcorn',
+      'mysterycoder',
+      'rockwoo',
+      'ryan-gaslight',
+      'st23am',
+      'kristinlasita',
+      'mitchlloyd',
+      'nockitoff',
+      'pkananen',
+      'tammygambrel',
     ]
   
   assignPosts: (@postCollection) ->
 
   all: ->
-    _.uniq(_.collect(@postCollection.all(),(post) -> post.author))
+    postedAuthors = @postedAuthors()
+    otherKnownAuthors = @otherKnownAuthors(postedAuthors)
+    _.union(postedAuthors,otherKnownAuthors)
+
+  postedAuthors: ->  
+    _.uniq(
+      _.select(
+        _.collect(@postCollection.all(),(post) -> post.author),
+        (author) -> author.name))
+
+  otherKnownAuthors: (postedAuthors) -> 
+    result = for authorName in @authorNames
+      if author = _.detect(postedAuthors,(author) -> author.name == authorName) 
+        author
+      else
+        new blogRanking.Author(authorName)
+    result || []
 
   findOrCreateByName: (name) -> 
     author = _.detect(@all(), (author) -> author.name == name)
