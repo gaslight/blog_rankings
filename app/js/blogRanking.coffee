@@ -44,6 +44,7 @@ AuthorSelectionCtrl = ($scope,$http,AuthorData,PostData) ->
 
     $scope.toggleAuthorSelection()
 
+AuthorSelectionCtrl.$inject = ['$scope','$http','AuthorData','PostData']
 
 ListCtrl = ($scope, $http, AuthorData, PostData) ->
 
@@ -105,6 +106,8 @@ ListCtrl = ($scope, $http, AuthorData, PostData) ->
     gapi.client.analytics.data.ga.get(jQuery.extend(standard_params,params))
 
   $scope.updatePage();
+
+ListCtrl.$inject = ['$scope','$http','AuthorData','PostData']
 
 blogRanking.controller 'ListCtrl', ListCtrl
 blogRanking.controller 'AuthorSelectionCtrl', AuthorSelectionCtrl
