@@ -23,7 +23,7 @@ AuthorSelectionCtrl = ($scope,$http,AuthorData,PostData) ->
     json._rev   = post.rev if post.rev
     json._id    = post.id if post.id
 
-    baseURL = "http://127.0.0.1:5984/posts/"
+    baseURL = "https://blogrankings.iriscouch.com:6984/posts/"
     url = if post.id then baseURL + post.id else baseURL
     method = if post.id then "PUT" else "POST"
 
@@ -61,7 +61,7 @@ ListCtrl = ($scope, $http, AuthorData, PostData) ->
 
   fetchPosts = ->
     $http(
-      url: "http://127.0.0.1:5984/posts/_all_docs?include_docs=true",
+      url: "https://blogrankings.iriscouch.com:6984/posts/_all_docs?include_docs=true",
       method: "GET",
     ).success( 
       (data, status, headers, config) -> 
