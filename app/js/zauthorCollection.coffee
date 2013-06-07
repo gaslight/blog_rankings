@@ -1,7 +1,7 @@
 class blogRanking.AuthorCollection
 
-  constructor: (@postCollection) -> 
-    @authorNames = [
+  @knownAuthorNames: -> 
+    [
       'jturnbull',
       'agilous',
       'cdmwebs',
@@ -18,6 +18,8 @@ class blogRanking.AuthorCollection
       'tammygambrel',
     ]
   
+  constructor: (@postCollection) -> 
+
   assignPosts: (@postCollection) ->
 
   all: ->
@@ -32,7 +34,7 @@ class blogRanking.AuthorCollection
         (author) -> author.name))
 
   otherKnownAuthors: (postedAuthors) -> 
-    result = for authorName in @authorNames
+    result = for authorName in @constructor.knownAuthorNames()
       if author = _.detect(postedAuthors,(author) -> author.name == authorName) 
         author
       else
@@ -63,11 +65,13 @@ class blogRanking.AuthorCollection
     @postCollection.findByAuthor(author).length
 
   sortDescending: (sortAttribute) -> 
-    _.sortBy(_.select(@postCollection.authors(), (author) -> author.name), (author) -> 0 - sortAttribute(author))
+    _.sortBy(
+      _.select(
+        @postCollection.authors(), 
+        (author) -> author.name and sortAttribute(author) > 0), 
+      (author) -> 0 - sortAttribute(author))
 
   byTotalVisits: ->
-    #_.sortBy(@postCollection.authors(), (author) => 0 - @totalVisits(author))
-
     @sortDescending((author) => @totalVisits(author))
 
   byAvgTimeOnSite: ->

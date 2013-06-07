@@ -3,11 +3,20 @@ class blogRanking.PostCollection
   constructor: (posts) ->
     @posts = []
     for post in posts
-      author = @authorCollection().findOrCreateByName(post.author.name)
+      author = @authorCollection().findOrCreateByName(post.author)
       @posts.push(new blogRanking.Post(post.url,author))
 
   all: ->
     @posts
+
+  totalPosts: (author) -> 
+    @authorCollection().totalPosts(author)
+
+  avgTimeOnSite: (author) -> 
+    @authorCollection().avgTimeOnSite(author)
+
+  totalVisits: (author) -> 
+    @authorCollection().totalVisits(author)
 
   authorCollection: ->
     new blogRanking.AuthorCollection(@)

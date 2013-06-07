@@ -18,10 +18,6 @@ ListCtrl = ($scope, $http, AuthorData) ->
 
   $scope.filter = new blogRanking.Filter
 
-  $scope.updateX = ->
-    $scope.posts.byVisits()[0].author.name = 3
-    $scope.authors.all()[0].name = "afd"
-
   $scope.formatSecondsToMinutes = (value) -> 
     minutes = Math.floor(value / 60)
     seconds = Math.round(value % 60)
@@ -34,11 +30,11 @@ ListCtrl = ($scope, $http, AuthorData) ->
 
   fetchPosts = ->
     $http(
-      url: "posts",
+      url: "http://127.0.0.1:5984/posts/_all_docs?include_docs=true",
       method: "GET",
     ).success( 
       (data, status, headers, config) -> 
-        $scope.posts = new blogRanking.PostCollection(data) 
+        $scope.posts = new blogRanking.PostCollection(data.rows) 
         applyVisits($scope.posts,$scope.filter)
     ).error( 
       (data, status, headers, config) -> 

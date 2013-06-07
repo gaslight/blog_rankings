@@ -2,12 +2,14 @@ describe "PostCollection", ->
   Given -> @author1 = new blogRanking.Author('jturnbull')
   Given -> @author2 = new blogRanking.Author('cdmwebs')
   Given -> @author3 = new blogRanking.Author()
+  Given -> @author4 = new blogRanking.Author('newguy')
   Given -> @authorData = [
     {'url':'/post1','author':{'name':'jturnbull'}},
     {'url':'/post2','author':{'name':'cdmwebs'}},
     {'url':'/post3','author':{'name':'jturnbull'}},
   ]
   And -> @postCollection = new blogRanking.PostCollection(@authorData)
+  And -> spyOn(blogRanking.AuthorCollection,'knownAuthorNames').andReturn(['newguy'])
   describe ".posts", ->
     Then -> expect(@postCollection.posts).toEqual([
       new blogRanking.Post('/post1',@author1),
@@ -18,6 +20,7 @@ describe "PostCollection", ->
     Then -> expect(@postCollection.authors()).toEqual([
       @author1,
       @author2,
+      @author4,
     ])
   describe ".findByAuthor",->
     Then -> expect(@postCollection.findByAuthor(@postCollection.authors()[0])).toEqual([

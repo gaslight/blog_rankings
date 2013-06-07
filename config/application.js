@@ -10,7 +10,7 @@ module.exports = require('lineman').config.extend('application', {
     js: {
       src: ["<banner:meta.banner>", "<%= files.js.jquery %>","<%= files.js.vendor %>", "<%= files.template.generated %>", "<%= files.coffee.generated %>", "<%= files.js.app %>"]
     }
-  }
+  },
   
   //Override application configuration here. Common examples follow in the comments.
 
@@ -21,12 +21,12 @@ module.exports = require('lineman').config.extend('application', {
   // requests for paths that don't match a static asset in ./generated will be forwarded to
   // whatever service might be running on the specified port.
   //
-  // server: {
-  //   apiProxy: {
-  //     enabled: true,
-  //     host: 'localhost',
-  //     port: 3000
-  //   }
-  // }
+//  server: {
+//    apiProxy: {
+//      enabled: true,
+//      host: '127.0.0.1',
+//      port: 5984
+//    }
+//  }
 
 });
