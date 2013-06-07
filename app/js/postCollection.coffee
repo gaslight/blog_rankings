@@ -1,10 +1,12 @@
 class blogRanking.PostCollection
-
-  constructor: (posts) ->
+    
+  initializePosts: (posts) ->
     @posts = []
     for post in posts
+      post = post.doc
       author = @authorCollection().findOrCreateByName(post.author)
-      @posts.push(new blogRanking.Post(post.url,author))
+      @posts.push(new blogRanking.Post(post._id,post._rev,post.url,author))
+    @
 
   all: ->
     @posts
@@ -56,7 +58,7 @@ class blogRanking.PostCollection
       post = @findByUrl(url)
       unless post
         author = new blogRanking.Author(undefined)
-        post = new blogRanking.Post(url,author)
+        post = new blogRanking.Post(undefined,undefined,url,author)
         @posts.push(post)
       apply(post,result) 
       post

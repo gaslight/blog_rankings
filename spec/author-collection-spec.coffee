@@ -1,11 +1,11 @@
 describe "AuthorCollection", ->
   Given -> @authorData = [
-    {'url':'/post1','author':{'name':'jturnbull'}},
-    {'url':'/post2','author':{'name':'cdmwebs'}},
-    {'url':'/post3','author':{'name':'cdmwebs'}},
-    {'url':'/post4','author':{'name':'jturnbull'}},
+    {'doc':{'_id':1,'_rev':1,'url':'/post1','author':'jturnbull'}},
+    {'doc':{'_id':2,'_rev':1,'url':'/post2','author':'cdmwebs'}},
+    {'doc':{'_id':3,'_rev':1,'url':'/post3','author':'cdmwebs'}},
+    {'doc':{'_id':4,'_rev':1,'url':'/post4','author':'jturnbull'}},
   ]
-  And -> @postCollection = new blogRanking.PostCollection(@authorData)
+  And -> @postCollection = new blogRanking.PostCollection().initializePosts(@authorData)
   And -> @authorCollection = new blogRanking.AuthorCollection(@postCollection)
   And -> spyOn(blogRanking.AuthorCollection,'knownAuthorNames').andReturn(['newguy'])
   describe ".findOrCreateByName", ->

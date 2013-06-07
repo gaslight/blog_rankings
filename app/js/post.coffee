@@ -1,3 +1,3 @@
 class blogRanking.Post
 
-  constructor: (@url,@author) ->
+  constructor: (@id,@rev,@url,@author) ->

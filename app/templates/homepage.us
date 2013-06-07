@@ -49,7 +49,7 @@
                     <div ng-controller="AuthorSelectionCtrl">
                       <span ng-hide="authorSelectionEnabled" ng-click="toggleAuthorSelection()">{{post.author.name || "[not set]"}}</span>
                       <span ng-show="authorSelectionEnabled" ng-click="toggleAuthorSelection()">
-                        <select name"author" ng-model="post.author" ng-change="toggleAuthorSelection()" ng-options="author as author.name for author in authors.all()">
+                        <select name"author" ng-model="post.author" ng-change="savePost(post)" ng-options="author as author.name for author in authors.all()">
                         </select>
                           
                       </span>

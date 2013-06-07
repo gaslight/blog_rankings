@@ -1,12 +1,14 @@
 window.blogRanking = angular.module('blogRanking',[])
 window.blogRanking.factory('AuthorData', -> 
   new blogRanking.AuthorCollection())
+window.blogRanking.factory('PostData', -> 
+  new blogRanking.PostCollection())
 
 #  config(($routeProvider) -> 
 #    $routeProvider.
 #      when('/', {controller: ListCtrl, templateUrl: 'list.html'}))
 
-AuthorSelectionCtrl = ($scope,AuthorData) ->
+AuthorSelectionCtrl = ($scope,$http,AuthorData,PostData) ->
   $scope.authors = AuthorData
 
   $scope.authorSelectionEnabled = false
@@ -14,7 +16,36 @@ AuthorSelectionCtrl = ($scope,AuthorData) ->
   $scope.toggleAuthorSelection = ->
     $scope.authorSelectionEnabled = !$scope.authorSelectionEnabled
 
-ListCtrl = ($scope, $http, AuthorData) ->
+  $scope.savePost = (post) ->
+    json = {}
+    json.author = post.author.name
+    json.url    = post.url
+    json._rev   = post.rev if post.rev
+    json._id    = post.id if post.id
+
+    baseURL = "http://127.0.0.1:5984/posts/"
+    url = if post.id then baseURL + post.id else baseURL
+    method = if post.id then "PUT" else "POST"
+
+    $http(
+      url: url,
+      method: method,
+      data: json,
+      headers: {"Content-Type":"application/json"},
+    ).success( 
+      (data, status, headers, config) -> 
+        post = PostData.findByUrl(post.url)
+        post.id  = data.id
+        post.rev = data.rev
+    ).error( 
+      (data, status, headers, config) -> 
+        $scope.status = status
+    ) 
+
+    $scope.toggleAuthorSelection()
+
+
+ListCtrl = ($scope, $http, AuthorData, PostData) ->
 
   $scope.filter = new blogRanking.Filter
 
@@ -34,7 +65,7 @@ ListCtrl = ($scope, $http, AuthorData) ->
       method: "GET",
     ).success( 
       (data, status, headers, config) -> 
-        $scope.posts = new blogRanking.PostCollection(data.rows) 
+        $scope.posts = PostData.initializePosts(data.rows) 
         applyVisits($scope.posts,$scope.filter)
     ).error( 
       (data, status, headers, config) -> 
