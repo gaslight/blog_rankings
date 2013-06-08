@@ -17,6 +17,12 @@
 
     <div id="content" class="row">
       <div ng-controller="ListCtrl">
+        <div ng-show="status.code" style="color:red">
+          <p>
+          {{status.code}}
+          {{status.message}}
+          </p>
+        </div>
         <form ng-submit="updatePage()">
           <div class="row">
             <div class="large-2 columns">
