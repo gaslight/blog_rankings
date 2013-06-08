@@ -80,7 +80,10 @@ ListCtrl = ($scope, $http, AuthorData, PostData) ->
         'sort': '-ga:visits',
       })
       request.execute (response) ->
-        posts.applyVisits(response.rows)
+        if response.rows
+          posts.applyVisits(response.rows)
+        else
+          $scope.status = response
         applyEngagement(posts,$scope.filter)
 
   applyEngagement = (posts,filter) ->
@@ -90,9 +93,13 @@ ListCtrl = ($scope, $http, AuthorData, PostData) ->
         'sort': '-ga:avgTimeOnSite',
       })
       request.execute (response) ->
-        posts.applyTimeOnSite(response.rows)
-        $scope.authors = AuthorData 
-        $scope.authors.assignPosts($scope.posts) 
+        if response.rows
+          applyEngagement(posts,$scope.filter)
+          posts.applyTimeOnSite(response.rows)
+          $scope.authors = AuthorData 
+          $scope.authors.assignPosts($scope.posts) 
+        else
+          $scope.status = response
         $scope.$apply()
 
   prepareRequest= (filter,params) ->
