@@ -1,20 +1,56 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>blog-stats</title>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640" />
+
     <link rel="stylesheet" type="text/css" href="css/app.min.css" media="all" />
+
+    <title>Blog Rankings by gaslight</title>
   </head>
+
   <body>
     <script type="text/javascript" src="js/app.min.js"></script>
     <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+    <div class="shell">
 
-    <header class="row">
-      <h1 class="large-7 columns">Blog Rankings</h1>
-      <div class="large-5 columns btn-wrapper">
-        <button id="authorize-button" style="visibility: hidden">Authorize</button>
-      </div>
-    </header>
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>Blog Rankings</h1>
+            <h2>You're the best, AROUND!</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
 
+      <section id="downloads">
+        <form ng-submit="updatePage()">
+          <span class="inner">
+            <span class="zip">
+              <input placeholder="Start Date" type="text" style="margin-left: 10px; width:230px; height: 30px" ng-model="filter.startDate" datepicker/>
+            </span>
+            <span class="tgz">
+              <input placeholder="End Date" type="text" style="margin-left: 30px; width:230px; height: 30px; text-align:right" ng-model="filter.endDate" datepicker/>
+            </span>
+          </span>
+          <div style="width:100%; text-align:center">
+            <input style="margin-top:-30px" type="submit" value="Update" class="button"/>
+          </div>
+        </form>
+      </section>
+
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <div id="authorize-button" style="visibility:hidden" class="large-5 columns btn-wrapper">
+          <p><button>Authorize</button></p>
+        </div>
     <div id="content" class="row">
       <div ng-controller="ListCtrl">
         <div ng-show="status.code" style="color:red">
@@ -23,26 +59,58 @@
           {{status.message}}
           </p>
         </div>
-        <form ng-submit="updatePage()">
-          <div class="row">
-            <div class="large-2 columns">
-              <label>Start Date</label>
-              <input type="text" ng-model="filter.startDate" datepicker/>
-            </div>
-            <div class="large-2 columns">
-              <label>End Date</label>
-              <input type="text" ng-model="filter.endDate" datepicker/>
-            </div>
-            <div class="large-8 columns">
-              <label>&nbsp;</label>
-              <input type="submit" value="Update" class="button small"/>
-            </div>
-          </div>
-        </form>
 
-        <h4>Most Visited</h4>
+        <h2>Most Visited</h2>
+        <div class="row">
+          <div class="large-12 columns">
+            <table>
+              <thead>
+                <tr><th>Author</th><th>Visit Total</th></tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="author in authors.byTotalVisits()">
+                  <td>{{author.name}}</td>
+                  <td>{{posts.authorCollection().totalVisits(author)}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <h2>Most Engaging</h2>
+        <div class="row">
+          <div class="large-12 columns">
+            <table>
+              <thead>
+                <tr><th>Author</th><th>Avg Total Time on Site</th></tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="author in authors.byAvgTimeOnSite()">
+                  <td>{{author.name}}</td>
+                  <td>{{formatSecondsToMinutes(posts.avgTimeOnSite(author))}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <h2>Most Prolific</h2>
         <div class="row">
           <div class="large-6 columns">
+            <table>
+              <thead>
+                <tr><th>Author</th><th>Total Posts</th></tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="author in authors.byPostsCount()">
+                  <td>{{author.name}}</td>
+                  <td>{{posts.totalPosts(author)}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <h2>Most Visited Posts</h2>
+        <div class="row">
+          <div class="large-12 columns">
             <table>
               <thead>
                 <tr><th>Page</th><th>Visits</th><th>Author</th></tr>
@@ -65,23 +133,10 @@
               </tbody>
             </table>
           </div>
-          <div class="large-6 columns">
-            <table>
-              <thead>
-                <tr><th>Author</th><th>Visit Total</th></tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="author in authors.byTotalVisits()">
-                  <td>{{author.name}}</td>
-                  <td>{{posts.authorCollection().totalVisits(author)}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
         </div>
-        <h4>Most Engaging</h4>
+        <h2>Most Engaging Posts</h2>
         <div class="row">
-          <div class="large-6 columns">
+          <div class="large-12 columns">
             <table>
               <thead>
                 <tr><th>Page</th><th>Time on Site</th><th>Author</th></tr>
@@ -104,37 +159,23 @@
               </tbody>
             </table>
           </div>
-          <div class="large-6 columns">
-            <table>
-              <thead>
-                <tr><th>Author</th><th>Avg Total Time on Site</th></tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="author in authors.byAvgTimeOnSite()">
-                  <td>{{author.name}}</td>
-                  <td>{{formatSecondsToMinutes(posts.avgTimeOnSite(author))}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <h4>Most Prolific</h4>
-        <div class="row">
-          <div class="large-6 columns">
-            <table>
-              <thead>
-                <tr><th>Author</th><th>Total Posts</th></tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="author in authors.byPostsCount()">
-                  <td>{{author.name}}</td>
-                  <td>{{posts.totalPosts(author)}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
         </div>
       </div>
     </div>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>&nbsp;</p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </footer>
+
+    </div>
+
+    
   </body>
 </html>
