@@ -13,6 +13,12 @@
 
 module.exports = require('lineman').config.extend('files', {
   js: {
-    jquery: "vendor/js/jquery.min.js"
-  }
+    jquery: "vendor/js/jquery.min.js",
+  },
+  css: {
+    vendor: ["vendor/css/**/*.css","vendor/stylesheets/screen.css"],
+  },
+  webfonts: {
+    root: "fonts",
+  },
 });

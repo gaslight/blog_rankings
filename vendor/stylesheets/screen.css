@@ -218,7 +218,7 @@ div#no-downloads span.inner {
 section#downloads a {
   display: block;
   position: relative;
-  height: 67px;
+  height: 196px;
   width: 275px;
   padding-top: 130px;
   background: transparent url(../img/download-sprite.png) 0 0 no-repeat;
