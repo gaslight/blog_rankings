@@ -26,155 +26,152 @@
         </span>
       </header>
 
-      <section id="downloads">
-        <form ng-submit="updatePage()">
-          <span class="inner">
-            <span class="zip">
-              <input placeholder="Start Date" type="text" style="margin-left: 10px; width:230px; height: 30px" ng-model="filter.startDate" datepicker/>
-            </span>
-            <span class="tgz">
-              <input placeholder="End Date" type="text" style="margin-left: 30px; width:230px; height: 30px; text-align:right" ng-model="filter.endDate" datepicker/>
-            </span>
-          </span>
-          <div style="width:100%; text-align:center">
-            <input style="margin-top:-30px" type="submit" value="Update" class="button"/>
-          </div>
-        </form>
-      </section>
-
-
-
-      <span class="banner-fix"></span>
-
-
-      <section id="main_content">
-        <div id="authorize-button" style="visibility:hidden" class="large-5 columns btn-wrapper">
-          <p><button>Authorize</button></p>
-        </div>
-    <div id="content" class="row">
       <div ng-controller="ListCtrl">
-        <div ng-show="status.code" style="color:red">
-          <p>
-          {{status.code}}
-          {{status.message}}
-          </p>
-        </div>
+        <section id="downloads">
+          <form ng-submit="updatePage()">
+            <span class="inner">
+              <span class="zip">
+                <input placeholder="Start Date" type="text" style="margin-left: 10px; width:230px; height: 30px" ng-model="filter.startDate" datepicker/>
+              </span>
+              <span class="tgz">
+                <input placeholder="End Date" type="text" style="margin-left: 30px; width:230px; height: 30px; text-align:right" ng-model="filter.endDate" datepicker/>
+              </span>
+            </span>
+            <div style="width:100%; text-align:center">
+              <input style="margin-top:-30px" type="submit" value="Update" class="button"/>
+            </div>
+          </form>
+        </section>
 
-        <h2>Most Visited</h2>
-        <div class="row">
-          <div class="large-12 columns">
-            <table>
-              <thead>
-                <tr><th>Author</th><th>Visit Total</th></tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="author in authors.byTotalVisits()">
-                  <td>{{author.name}}</td>
-                  <td>{{posts.authorCollection().totalVisits(author)}}</td>
-                </tr>
-              </tbody>
-            </table>
+        <span class="banner-fix"></span>
+
+        <section id="main_content">
+          <div id="authorize-button" style="visibility:hidden" class="large-5 columns btn-wrapper">
+            <p><button>Authorize</button></p>
           </div>
-        </div>
-        <h2>Most Engaging</h2>
-        <div class="row">
-          <div class="large-12 columns">
-            <table>
-              <thead>
-                <tr><th>Author</th><th>Avg Total Time on Site</th></tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="author in authors.byAvgTimeOnSite()">
-                  <td>{{author.name}}</td>
-                  <td>{{formatSecondsToMinutes(posts.avgTimeOnSite(author))}}</td>
-                </tr>
-              </tbody>
-            </table>
+      <div id="content" class="row">
+          <div ng-show="status.code" style="color:red">
+            <p>
+            {{status.code}}
+            {{status.message}}
+            </p>
           </div>
-        </div>
-        <h2>Most Prolific</h2>
-        <div class="row">
-          <div class="large-6 columns">
-            <table>
-              <thead>
-                <tr><th>Author</th><th>Total Posts</th></tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="author in authors.byPostsCount()">
-                  <td>{{author.name}}</td>
-                  <td>{{posts.totalPosts(author)}}</td>
-                </tr>
-              </tbody>
-            </table>
+
+          <h2>Most Visited</h2>
+          <div class="row">
+            <div class="large-12 columns">
+              <table>
+                <thead>
+                  <tr><th>Author</th><th>Visit Total</th></tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="author in authors.byTotalVisits()">
+                    <td>{{author.name}}</td>
+                    <td>{{posts.authorCollection().totalVisits(author)}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-        <h2>Most Visited Posts</h2>
-        <div class="row">
-          <div class="large-12 columns">
-            <table>
-              <thead>
-                <tr><th>Page</th><th>Visits</th><th>Author</th></tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="post in posts.byVisits()">
-                  <td>{{post.url}}</td>
-                  <td>{{post.visits}}</td>
-                  <td>
-                    <div ng-controller="AuthorSelectionCtrl">
-                      <span ng-hide="authorSelectionEnabled" ng-click="toggleAuthorSelection()">{{post.author.name || "[not set]"}}</span>
-                      <span ng-show="authorSelectionEnabled" ng-click="toggleAuthorSelection()">
+          <h2>Most Engaging</h2>
+          <div class="row">
+            <div class="large-12 columns">
+              <table>
+                <thead>
+                  <tr><th>Author</th><th>Avg Total Time on Site</th></tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="author in authors.byAvgTimeOnSite()">
+                    <td>{{author.name}}</td>
+                    <td>{{formatSecondsToMinutes(posts.avgTimeOnSite(author))}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <h2>Most Prolific</h2>
+          <div class="row">
+            <div class="large-6 columns">
+              <table>
+                <thead>
+                  <tr><th>Author</th><th>Total Posts</th></tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="author in authors.byPostsCount()">
+                    <td>{{author.name}}</td>
+                    <td>{{posts.totalPosts(author)}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <h2>Most Visited Posts</h2>
+          <div class="row">
+            <div class="large-12 columns">
+              <table>
+                <thead>
+                  <tr><th>Page</th><th>Visits</th><th>Author</th></tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="post in posts.byVisits()">
+                    <td>{{post.url}}</td>
+                    <td>{{post.visits}}</td>
+                    <td>
+                      <div ng-controller="AuthorSelectionCtrl">
+                        <span ng-hide="authorSelectionEnabled" ng-click="toggleAuthorSelection()">{{post.author.name || "[not set]"}}</span>
+                        <span ng-show="authorSelectionEnabled" ng-click="toggleAuthorSelection()">
                         <select name"author" ng-model="post.author" ng-change="savePost(post)" ng-options="author as author.name for author in authors.all()">
-                        </select>
-                          
-                      </span>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                          </select>
+                            
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <h2>Most Engaging Posts</h2>
+          <div class="row">
+            <div class="large-12 columns">
+              <table>
+                <thead>
+                  <tr><th>Page</th><th>Time on Site</th><th>Author</th></tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="post in posts.byTimeOnSite()">
+                    <td>{{post.url}}</td>
+                    <td>{{formatSecondsToMinutes(post.timeOnSite)}}</td>
+                    <td>
+                      <div ng-controller="AuthorSelectionCtrl">
+                        <span ng-hide="authorSelectionEnabled" ng-click="toggleAuthorSelection()">{{post.author.name || "[not set]"}}</span>
+                        <span ng-show="authorSelectionEnabled" ng-click="toggleAuthorSelection()">
+                        <select name"author" ng-model="post.author" ng-change="savePost(post)" ng-options="author as author.name for author in authors.all()">
+                          </select>
+                            
+                        </span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-        <h2>Most Engaging Posts</h2>
-        <div class="row">
-          <div class="large-12 columns">
-            <table>
-              <thead>
-                <tr><th>Page</th><th>Time on Site</th><th>Author</th></tr>
-              </thead>
-              <tbody>
-                <tr ng-repeat="post in posts.byTimeOnSite()">
-                  <td>{{post.url}}</td>
-                  <td>{{formatSecondsToMinutes(post.timeOnSite)}}</td>
-                  <td>
-                    <div ng-controller="AuthorSelectionCtrl">
-                      <span ng-hide="authorSelectionEnabled" ng-click="toggleAuthorSelection()">{{post.author.name || "[not set]"}}</span>
-                      <span ng-show="authorSelectionEnabled" ng-click="toggleAuthorSelection()">
-                        <select name"author" ng-model="post.author" ng-change="toggleAuthorSelection()" ng-options="author as author.name for author in authors.all()">
-                        </select>
-                          
-                      </span>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+        </section>
       </div>
-    </div>
-      </section>
 
-      <footer>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <p>&nbsp;</p>
+        <footer>
+          <span class="ribbon-outer">
+            <span class="ribbon-inner">
+              <p>&nbsp;</p>
+            </span>
+            <span class="left-tail"></span>
+            <span class="right-tail"></span>
           </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-      </footer>
+        </footer>
 
-    </div>
+      </div>
 
     
   </body>
