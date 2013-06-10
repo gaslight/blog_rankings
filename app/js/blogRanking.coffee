@@ -94,7 +94,6 @@ ListCtrl = ($scope, $http, AuthorData, PostData) ->
       })
       request.execute (response) ->
         if response.rows
-          applyEngagement(posts,$scope.filter)
           posts.applyTimeOnSite(response.rows)
           $scope.authors = AuthorData 
           $scope.authors.assignPosts($scope.posts) 
