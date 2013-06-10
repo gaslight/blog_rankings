@@ -16,10 +16,10 @@ module.exports = {
 
   drawRoutes: function(app) {
     app.get('/rankings.html', function(req, res){
-      res.sendfile('app/templates/rankings.us')
+      res.sendfile('app/templates/rankings.html')
     });
     app.get('/posts.html', function(req, res){
-      res.sendfile('app/templates/posts.us')
+      res.sendfile('app/templates/posts.html')
     });
   }
 };
