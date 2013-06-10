@@ -37,8 +37,8 @@
 
 
       <section id="main_content">
-        <div class="large-5 columns btn-wrapper">
-          <button id="authorize-button" style="visibility: hidden">Authorize</button>
+        <div id="authorize-button" style="visibility:hidden" class="large-5 columns btn-wrapper">
+          <p><button>Authorize</button></p>
         </div>
     <div id="content" class="row">
       <div ng-controller="ListCtrl">

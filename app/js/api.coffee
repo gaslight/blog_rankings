@@ -14,9 +14,10 @@ handleAuthResult = (authResult) ->
   angular.bootstrap(document, ['blogRanking'])
 
   if (authResult && !authResult.error)
-    authorizeButton.style.visibility = 'hidden';
+    authorizeButton.style.display = 'none';
   else
     authorizeButton.style.visibility = '';
+    authorizeButton.style.display = '';
     authorizeButton.onclick = handleAuthClick;
 
 handleAuthClick = (event) ->
