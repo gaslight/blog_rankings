@@ -13,19 +13,13 @@
  */
 
 module.exports = {
- /*
+
   drawRoutes: function(app) {
-    app.get('/posts', function(req, res){
-      res.json(
-        [
-         {'url':'/post/51721063999/chris-glass-of-wire-twine-joined-us-to-talk','author':'mitchlloyd'},
-         {'url':'/post/44267174375/gaslight-podcast-12-benefit-corporations','author':'mitchlloyd'},
-         {'url':'/post/36883746175/using-local-libraries-with-cocoapods','author':'cdmwebs'},
-         {'url':'/post/24538291598/backbone-js-views-done-the-right-way','author':'mysterycoder'},
-         {'url':'/post/33428085451/easier-backbone-form-views-with-backtastic','author':'mysterycoder'},
-        ]
-      );
+    app.get('/rankings.html', function(req, res){
+      res.sendfile('app/templates/rankings.us')
+    });
+    app.get('/posts.html', function(req, res){
+      res.sendfile('app/templates/posts.us')
     });
   }
- */
 };

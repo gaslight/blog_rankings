@@ -1,12 +1,13 @@
-window.blogRanking = angular.module('blogRanking',[])
+window.blogRanking = angular.module('blogRanking',[]).
+  config(($routeProvider) -> 
+    $routeProvider.
+      when('/', {controller: ListCtrl, templateUrl: 'rankings.html'}).
+      when('/posts', {controller: ListCtrl, templateUrl: 'posts.html'}))
+
 window.blogRanking.factory('AuthorData', -> 
   new blogRanking.AuthorCollection())
 window.blogRanking.factory('PostData', -> 
   new blogRanking.PostCollection())
-
-#  config(($routeProvider) -> 
-#    $routeProvider.
-#      when('/', {controller: ListCtrl, templateUrl: 'list.html'}))
 
 AuthorSelectionCtrl = ($scope,$http,AuthorData,PostData) ->
   $scope.authors = AuthorData
