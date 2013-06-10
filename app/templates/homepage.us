@@ -58,8 +58,10 @@
           </div>
 
           <div style="width:100%; text-align:center">
-            <a href="#/">Rankings</a> |
-            <a href="#/posts">Posts</a>
+            <p>
+              <a href="#/">Rankings</a> |
+              <a href="#/posts">Posts</a>
+            </p>
           </div>
 
           <div ng-view></div>
