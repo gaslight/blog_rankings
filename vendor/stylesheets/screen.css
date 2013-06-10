@@ -251,9 +251,9 @@ span.banner-fix {
 
 section#main_content {
   z-index: 2;
-  padding: 20px 82px 0;
+  padding: 0px 82px 0;
   min-height:185px;
-  margin-top: 130px;
+  margin-top: 180px;
 }
 
 /* footer */
