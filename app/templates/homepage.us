@@ -28,7 +28,14 @@
 
       <section id="downloads">
         <span class="inner">
-          <a href="https://github.com/gaslight/blog_rankings/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/gaslight/blog_rankings/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+          <form ng-submit="updatePage()">
+            <span class="zip">
+              <input type="text" ng-model="filter.startDate" datepicker/>
+            </span>
+            <span class="tgz">
+              <input type="text" class="" ng-model="filter.endDate" datepicker/>
+            </span>
+         </form>
         </span>
       </section>
 
@@ -48,22 +55,6 @@
           {{status.message}}
           </p>
         </div>
-        <form ng-submit="updatePage()">
-          <div class="row">
-            <div class="large-2 columns">
-              <label>Start Date</label>
-              <input type="text" ng-model="filter.startDate" datepicker/>
-            </div>
-            <div class="large-2 columns">
-              <label>End Date</label>
-              <input type="text" ng-model="filter.endDate" datepicker/>
-            </div>
-            <div class="large-8 columns">
-              <label>&nbsp;</label>
-              <input type="submit" value="Update" class="button small"/>
-            </div>
-          </div>
-        </form>
 
         <h4>Most Visited</h4>
         <div class="row">
