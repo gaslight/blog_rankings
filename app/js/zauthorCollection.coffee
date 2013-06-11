@@ -69,7 +69,7 @@ class blogRanking.AuthorCollection
       _.select(
         @postCollection.authors(), 
         (author) -> author.name and sortAttribute(author) > 0), 
-      (author) -> 0 - sortAttribute(author))
+      (author) -> 0 - sortAttribute(author)).slice(0,4)
 
   byTotalVisits: ->
     @sortDescending((author) => @totalVisits(author))

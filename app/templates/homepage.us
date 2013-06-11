@@ -60,7 +60,8 @@
           <div style="width:100%; text-align:center">
             <p>
               <a href="#/">Rankings</a> |
-              <a href="#/posts">Posts</a>
+              <a href="#/visits">Visits</a> |
+              <a href="#/engagement">Engagement</a>
             </p>
           </div>
 

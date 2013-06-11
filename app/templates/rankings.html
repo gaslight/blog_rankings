@@ -1,17 +1,5 @@
 <div class="row">
-  <div class="large-6 columns">
-    <h2>Most Visited</h2>
-    <table>
-      <thead>
-        <tr><th>Author</th><th>Visit Total</th></tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="author in authors.byTotalVisits()">
-          <td>{{author.name}}</td>
-          <td>{{posts.authorCollection().totalVisits(author)}}</td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="large-7 columns">
     <h2>Most Prolific</h2>
     <table>
       <thead>
@@ -24,8 +12,6 @@
         </tr>
       </tbody>
     </table>
-  </div>
-  <div class="large-6 columns">
     <h2>Most Engaging</h2>
     <table>
       <thead>
@@ -35,6 +21,20 @@
         <tr ng-repeat="author in authors.byAvgTimeOnSite()">
           <td>{{author.name}}</td>
           <td>{{formatSecondsToMinutes(posts.avgTimeOnSite(author))}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="large-5 columns">
+    <h2>Most Visited</h2>
+    <table>
+      <thead>
+        <tr><th>Author</th><th>Visit Total</th></tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="author in authors.byTotalVisits()">
+          <td>{{author.name}}</td>
+          <td>{{posts.authorCollection().totalVisits(author)}}</td>
         </tr>
       </tbody>
     </table>

@@ -18,8 +18,14 @@ module.exports = {
     app.get('/rankings.html', function(req, res){
       res.sendfile('app/templates/rankings.html')
     });
-    app.get('/posts.html', function(req, res){
-      res.sendfile('app/templates/posts.html')
+    app.get('/visits.html', function(req, res){
+      res.sendfile('app/templates/visits.html')
+    });
+    app.get('/engagement.html', function(req, res){
+      res.sendfile('app/templates/engagement.html')
+    });
+    app.get('/authorSelector.html', function(req, res){
+      res.sendfile('app/templates/authorSelector.html')
     });
   }
 };

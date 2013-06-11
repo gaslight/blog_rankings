@@ -2,7 +2,8 @@ window.blogRanking = angular.module('blogRanking',[]).
   config(($routeProvider) -> 
     $routeProvider.
       when('/', {controller: ListCtrl, templateUrl: 'rankings.html'}).
-      when('/posts', {controller: ListCtrl, templateUrl: 'posts.html'}))
+      when('/visits', {controller: ListCtrl, templateUrl: 'visits.html'}).
+      when('/engagement', {controller: ListCtrl, templateUrl: 'engagement.html'}))
 
 window.blogRanking.factory('AuthorData', -> 
   new blogRanking.AuthorCollection())
@@ -108,7 +109,7 @@ ListCtrl = ($scope, $http, AuthorData, PostData) ->
         'dimensions' : 'ga:pagepath',
         'start-date': filter.startDate,
         'end-date': filter.endDate,
-        'max-results': '10',
+        'max-results': '200',
     }
     gapi.client.analytics.data.ga.get(jQuery.extend(standard_params,params))
 

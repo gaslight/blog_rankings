@@ -55,6 +55,18 @@ describe "PostCollection", ->
          {'id':2,'rev':1,'url':'/post2','author':@author2,'visits':5},
          {'id':3,'rev':1,'url':'/post3','author':@author1},
          {'id':undefined,'rev':undefined,'url':'/post4','author':{"name":undefined},'visits':6}])
+    describe "disregards non-posts", ->
+      Given -> @data =
+        [['/post1',3],
+         ['/post2',5],
+         ['/post4',6],
+         ['/page5',10]]
+      When -> @postCollection.applyVisits(@data)
+      Then -> expect(@postCollection.posts).toEqual(
+        [{'id':1,'rev':1,'url':'/post1','author':@author1,'visits':3},
+         {'id':2,'rev':1,'url':'/post2','author':@author2,'visits':5},
+         {'id':3,'rev':1,'url':'/post3','author':@author1},
+         {'id':undefined,'rev':undefined,'url':'/post4','author':{"name":undefined},'visits':6}])
   describe ".applyTimeOnSite", ->
       Given -> @data =
         [['/post1','169.0'],

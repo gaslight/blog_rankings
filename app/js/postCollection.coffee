@@ -33,13 +33,13 @@ class blogRanking.PostCollection
     _.sortBy(
       _.select(@posts,(post) -> post.visits),
       (post) -> 0 - parseInt(post.visits)
-    ).slice(0,9)
+    )
 
   byTimeOnSite: ->
     _.sortBy(
       _.select(@posts,(post) -> post.timeOnSite),
       (post) -> 0 - parseInt(post.timeOnSite)
-    ).slice(0,9)
+    )
 
   findByUrl: (url) -> 
     post = _.detect(@posts, (post) -> post.url == url)
@@ -55,11 +55,10 @@ class blogRanking.PostCollection
       url    = row[0]
       result = row[1]
 
-      post = @findByUrl(url)
-      unless post
-        author = new blogRanking.Author(undefined)
-        post = new blogRanking.Post(undefined,undefined,url,author)
-        @posts.push(post)
-      apply(post,result) 
-      post
-
+      if url.match(/post/gi)
+        post = @findByUrl(url)
+        unless post
+          author = new blogRanking.Author(undefined)
+          post = new blogRanking.Post(undefined,undefined,url,author)
+          @posts.push(post)
+        apply(post,result) 
