@@ -1,0 +1,17 @@
+<h2>Most Engaging Posts</h2>
+<div class="row">
+  <div class="large-12 columns">
+    <table>
+      <thead>
+        <tr><th>Page</th><th>Time on Site</th><th>Author</th></tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="post in posts.byTimeOnSite()">
+          <td><a href="http://blog.gaslight.co{{post.url}}">{{post.url}}</a></td>
+          <td>{{formatSecondsToMinutes(post.timeOnSite)}}</td>
+          <td ng-include src="'authorSelector.html'"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

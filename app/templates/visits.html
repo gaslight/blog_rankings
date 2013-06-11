@@ -1,0 +1,17 @@
+<h2>Most Visited Posts</h2>
+<div class="row">
+  <div class="large-12 columns">
+    <table>
+      <thead>
+        <tr><th>Page</th><th>Visits</th><th>Author</th></tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="post in posts.byVisits()">
+          <td><a href="http://blog.gaslight.co{{post.url}}">{{post.url}}</a></td>
+          <td>{{post.visits}}</td>
+          <td ng-include src="'authorSelector.html'"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
