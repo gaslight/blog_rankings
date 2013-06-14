@@ -1,9 +1,9 @@
 window.blogRanking = angular.module('blogRanking',[]).
-  config(($routeProvider) -> 
+  config(['$routeProvider', ($routeProvider) ->
     $routeProvider.
       when('/', {controller: ListCtrl, templateUrl: 'rankings.html'}).
       when('/visits', {controller: ListCtrl, templateUrl: 'visits.html'}).
-      when('/engagement', {controller: ListCtrl, templateUrl: 'engagement.html'}))
+      when('/engagement', {controller: ListCtrl, templateUrl: 'engagement.html'})])
 
 window.blogRanking.factory('AuthorData', -> 
   new blogRanking.AuthorCollection())
