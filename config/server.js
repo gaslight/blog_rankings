@@ -15,16 +15,16 @@
 module.exports = {
 
   drawRoutes: function(app) {
-    app.get('/rankings.html', function(req, res){
+    app.get('/templates/rankings.html', function(req, res){
       res.sendfile('app/templates/rankings.html')
     });
-    app.get('/visits.html', function(req, res){
+    app.get('/templates/visits.html', function(req, res){
       res.sendfile('app/templates/visits.html')
     });
-    app.get('/engagement.html', function(req, res){
+    app.get('/templates/engagement.html', function(req, res){
       res.sendfile('app/templates/engagement.html')
     });
-    app.get('/authorSelector.html', function(req, res){
+    app.get('/templates/authorSelector.html', function(req, res){
       res.sendfile('app/templates/authorSelector.html')
     });
   }
