@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="large-7 columns">
+    <h2>Most Prolific</h2>
+    <table>
+      <thead>
+        <tr><th>Author</th><th>Total Posts</th></tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="author in authors.byPostsCount()">
+          <td>{{author.name}}</td>
+          <td>{{posts.totalPosts(author)}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <h2>Most Engaging</h2>
+    <table>
+      <thead>
+        <tr><th>Author</th><th>Avg Total Time on Site</th></tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="author in authors.byAvgTimeOnSite()">
+          <td>{{author.name}}</td>
+          <td>{{formatSecondsToMinutes(posts.avgTimeOnSite(author))}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="large-5 columns">
+    <h2>Most Visited</h2>
+    <table>
+      <thead>
+        <tr><th>Author</th><th>Visit Total</th></tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="author in authors.byTotalVisits()">
+          <td>{{author.name}}</td>
+          <td>{{posts.authorCollection().totalVisits(author)}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
