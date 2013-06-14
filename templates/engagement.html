@@ -9,7 +9,7 @@
         <tr ng-repeat="post in posts.byTimeOnSite()">
           <td><a href="http://blog.gaslight.co{{post.url}}">{{post.url}}</a></td>
           <td>{{formatSecondsToMinutes(post.timeOnSite)}}</td>
-          <td ng-include src="'authorSelector.html'"></td>
+          <td ng-include src="'templates/authorSelector.html'"></td>
         </tr>
       </tbody>
     </table>
