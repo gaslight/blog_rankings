@@ -9,6 +9,8 @@ window.blogRanking.factory('AuthorData', ->
   new blogRanking.AuthorCollection())
 window.blogRanking.factory('PostData', -> 
   new blogRanking.PostCollection())
+window.blogRanking.factory('DateFilter', -> 
+  new blogRanking.Filter())
 
 AuthorSelectionCtrl = ($scope,$http,AuthorData,PostData) ->
   $scope.authors = AuthorData
@@ -48,9 +50,9 @@ AuthorSelectionCtrl = ($scope,$http,AuthorData,PostData) ->
 
 AuthorSelectionCtrl.$inject = ['$scope','$http','AuthorData','PostData']
 
-ListCtrl = ($scope, $http, AuthorData, PostData) ->
+ListCtrl = ($scope, $http, AuthorData, PostData, DateFilter) ->
 
-  $scope.filter = new blogRanking.Filter
+  $scope.filter = DateFilter
 
   $scope.formatSecondsToMinutes = (value) -> 
     minutes = Math.floor(value / 60)
@@ -115,7 +117,7 @@ ListCtrl = ($scope, $http, AuthorData, PostData) ->
 
   $scope.updatePage();
 
-ListCtrl.$inject = ['$scope','$http','AuthorData','PostData']
+ListCtrl.$inject = ['$scope','$http','AuthorData','PostData','DateFilter']
 
 blogRanking.controller 'ListCtrl', ListCtrl
 blogRanking.controller 'AuthorSelectionCtrl', AuthorSelectionCtrl
