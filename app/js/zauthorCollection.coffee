@@ -16,6 +16,7 @@ class blogRanking.AuthorCollection
       'nockitoff',
       'pkananen',
       'tammygambrel',
+      'heflinao',
     ]
   
   constructor: (@postCollection) -> 
