@@ -26,30 +26,29 @@
         </span>
       </header>
 
-      <div ng-controller="ListCtrl">
-        <section id="downloads">
-          <form ng-submit="updatePage()">
-            <span class="inner">
-              <span class="zip">
-                <input placeholder="Start Date" type="text" style="margin-left: 10px; width:230px; height: 30px" ng-model="filter.startDate" datepicker/>
-              </span>
-              <span class="tgz">
-                <input placeholder="End Date" type="text" style="margin-left: 30px; width:230px; height: 30px; text-align:right" ng-model="filter.endDate" datepicker/>
-              </span>
+      <section id="downloads">
+        <form ng-submit="updatePage()">
+          <span class="inner">
+            <span class="zip">
+              <input placeholder="Start Date" type="text" style="margin-left: 10px; width:230px; height: 30px" ng-model="filter.startDate" datepicker/>
             </span>
-            <div style="width:100%; text-align:center">
-              <input style="margin-top:-30px" type="submit" value="Update" class="button"/>
-            </div>
-          </form>
-        </section>
-
-        <span class="banner-fix"></span>
-
-        <section id="main_content">
-          <div id="authorize-button" style="visibility:hidden" class="large-5 columns btn-wrapper">
-            <p><button>Authorize</button></p>
+            <span class="tgz">
+              <input placeholder="End Date" type="text" style="margin-left: 30px; width:230px; height: 30px; text-align:right" ng-model="filter.endDate" datepicker/>
+            </span>
+          </span>
+          <div style="width:100%; text-align:center">
+            <input style="margin-top:-30px" type="submit" value="Update" class="button"/>
           </div>
-      <div id="content" class="row">
+        </form>
+      </section>
+
+      <span class="banner-fix"></span>
+
+      <section id="main_content">
+        <div id="authorize-button" style="visibility:hidden" class="large-5 columns btn-wrapper">
+          <p><button>Authorize</button></p>
+        </div>
+        <div id="content" class="row">
           <div ng-show="status.code" style="color:red">
             <p>
             {{status.code}}
@@ -66,8 +65,8 @@
           </div>
 
           <div ng-view></div>
-        </section>
-      </div>
+        </div>
+      </section>
 
       <footer>
         <span class="ribbon-outer">
